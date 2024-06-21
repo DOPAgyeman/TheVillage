@@ -17,7 +17,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   splash: {
     image: './assets/splash.png',
     resizeMode: 'cover',
-    backgroundColor: '#2E3C4B',
+    backgroundColor: '#01473D',
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -27,13 +27,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     supportsTablet: true,
     bundleIdentifier: Env.BUNDLE_ID,
   },
+  androidNavigationBar: {
+    backgroundColor: '#01473D',
+  },
   experiments: {
     typedRoutes: true,
   },
   android: {
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
-      backgroundColor: '#2E3C4B',
+      backgroundColor: '#01473D',
     },
     package: Env.PACKAGE,
   },
