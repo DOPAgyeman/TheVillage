@@ -55,7 +55,7 @@ export interface NInputProps extends TextInputProps {
 
 type TRule<T extends FieldValues> = Omit<
   RegisterOptions<T, Path<T>>,
-  'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+  'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
 >;
 
 export type RuleType<T extends FieldValues> = { [name in keyof T]: TRule<T> };
