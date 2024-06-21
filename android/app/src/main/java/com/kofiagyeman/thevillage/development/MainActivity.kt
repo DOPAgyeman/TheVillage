@@ -1,4 +1,4 @@
-package com.thevillage.development
+package com.kofiagyeman.thevillage.development
 
 import android.os.Build
 import android.os.Bundle
