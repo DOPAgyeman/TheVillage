@@ -13,8 +13,7 @@ import { Github, Rate, Share, Support, Website } from '@/ui/icons';
 export default function Settings() {
   const signOut = useAuth.use.signOut();
   const { colorScheme } = useColorScheme();
-  const iconColor =
-    colorScheme === 'dark' ? colors.neutral[400] : colors.neutral[500];
+  const iconColor = colorScheme === 'dark' ? colors.black : colors.lightGray;
   return (
     <>
       <FocusAwareStatusBar />

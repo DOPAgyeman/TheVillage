@@ -97,7 +97,7 @@ export const Options = React.forwardRef<BottomSheetModal, OptionsProps>(
         index={0}
         snapPoints={snapPoints}
         backgroundStyle={{
-          backgroundColor: isDark ? colors.neutral[800] : colors.white,
+          backgroundColor: isDark ? colors.lightGray : colors.white,
         }}
       >
         <List
@@ -210,7 +210,7 @@ export const Select = (props: SelectProps) => {
         {error && (
           <Text
             testID={`${testID}-error`}
-            className="text-sm text-danger-300 dark:text-danger-600"
+            className="text-danger-300 dark:text-danger-600 text-sm"
           >
             {error}
           </Text>
