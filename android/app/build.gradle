@@ -83,9 +83,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.thevillage.development'
+    namespace 'com.kofiagyeman.thevillage.development'
     defaultConfig {
-        applicationId 'com.thevillage.development'
+        applicationId 'com.kofiagyeman.thevillage.development'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
