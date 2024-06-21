@@ -35,7 +35,7 @@ export default function AddPost() {
           //queryClient.invalidateQueries(usePosts.getKey());
         },
         onError: () => {
-          showErrorMessage('Error adding post');
+          showErrorMessage('Error adding post!');
         },
       }
     );
