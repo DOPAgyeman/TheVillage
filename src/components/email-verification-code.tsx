@@ -7,51 +7,38 @@ import * as z from 'zod';
 import { Button, ControlledInput, Text, View } from '@/ui';
 
 const schema = z.object({
-  email: z
-    .string({
-      required_error: 'Email is required',
-    })
-    .email('Invalid email format'),
-  password: z
-    .string({
-      required_error: 'Password is required',
-    })
-    .min(6, 'Password must be at least 6 characters'),
+  code: z.string({
+    required_error: 'Please enter your email verification code',
+  }),
 });
 
 export type FormType = z.infer<typeof schema>;
 
-export type LoginFormProps = {
+export type VerificationCodeFormProps = {
   onSubmit?: SubmitHandler<FormType>;
 };
 
-export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
+export const EmailVerificationCodeForm = ({
+  onSubmit = () => {},
+}: VerificationCodeFormProps) => {
   const { handleSubmit, control } = useForm<FormType>({
     resolver: zodResolver(schema),
   });
   return (
     <View className="flex-1 justify-center p-4">
       <Text testID="form-title" className="pb-6 text-center text-2xl">
-        Sign In
+        Enter your email verification code
       </Text>
 
       <ControlledInput
-        testID="email-input"
+        testID="code"
         control={control}
-        name="email"
-        label="Email"
-      />
-      <ControlledInput
-        testID="password-input"
-        control={control}
-        name="password"
-        label="Password"
-        placeholder="***"
-        secureTextEntry={true}
+        name="code"
+        label="Code"
       />
       <Button
-        testID="login-button"
-        label="Login"
+        testID="verification-code-button"
+        label="Verify"
         onPress={handleSubmit(onSubmit)}
       />
     </View>

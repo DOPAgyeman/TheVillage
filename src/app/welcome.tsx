@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import React from 'react';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
@@ -33,9 +34,18 @@ const Welcome = () => {
             label="Log in"
             variant="default"
             size="lg"
-            onPress={() => {}}
+            onPress={() => {
+              router.push('/login');
+            }}
           />
-          <Button label="Sign up" variant="outline" size="lg" />
+          <Button
+            label="Sign up"
+            variant="outline"
+            size="lg"
+            onPress={() => {
+              router.push('/sign-up');
+            }}
+          />
         </Animated.View>
       </View>
     </View>

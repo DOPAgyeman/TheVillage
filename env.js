@@ -78,6 +78,7 @@ const client = z.object({
   VERSION: z.string(),
 
   // ADD YOUR CLIENT ENV VARS HERE
+  EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
   API_URL: z.string(),
   VAR_NUMBER: z.number(),
   VAR_BOOL: z.boolean(),
@@ -87,7 +88,6 @@ const buildTime = z.object({
   EXPO_ACCOUNT_OWNER: z.string(),
   EAS_PROJECT_ID: z.string(),
   // ADD YOUR BUILD TIME ENV VARS HERE
-  SECRET_KEY: z.string(),
 });
 
 /**
@@ -105,6 +105,8 @@ const _clientEnv = {
   API_URL: process.env.API_URL,
   VAR_NUMBER: Number(process.env.VAR_NUMBER),
   VAR_BOOL: process.env.VAR_BOOL === 'true',
+  EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY:
+    process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY,
 };
 
 /**
@@ -114,7 +116,7 @@ const _buildTimeEnv = {
   EXPO_ACCOUNT_OWNER,
   EAS_PROJECT_ID,
   // ADD YOUR ENV VARS HERE TOO
-  SECRET_KEY: process.env.SECRET_KEY,
+  //SECRET_KEY: process.env.SECRET_KEY,
 };
 
 /**
