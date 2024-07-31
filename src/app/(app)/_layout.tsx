@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { Link, Redirect, SplashScreen, Tabs } from 'expo-router';
+import { Link, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
 import { useAuth, useIsFirstTime } from '@/core';
@@ -9,6 +9,8 @@ import {
   Settings as SettingsIcon,
   Style as StyleIcon,
 } from '@/ui/icons';
+
+import Welcome from '../welcome';
 
 export default function TabLayout() {
   const status = useAuth.use.status();
@@ -25,7 +27,7 @@ export default function TabLayout() {
   }, [hideSplash, status]);
 
   if (status === 'signOut' || isFirstTime) {
-    return <Redirect href="/welcome" />;
+    return <Welcome />;
   }
   return (
     <Tabs>

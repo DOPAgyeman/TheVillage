@@ -108,7 +108,7 @@ const AnimatedIntro = () => {
     () => labelWidth.value,
     (newWidth) => {
       currentX.value = withDelay(
-        1300,
+        900,
         withTiming(
           half + newWidth / 2,
           {
@@ -122,7 +122,7 @@ const AnimatedIntro = () => {
               canGoToNext.value = true;
               isAtStart.value = false;
               ballOpacity.value = withDelay(
-                250,
+                200,
                 withRepeat(
                   withTiming(0, {
                     duration: 550,
@@ -152,7 +152,7 @@ const AnimatedIntro = () => {
       if (next) {
         canGoToNext.value = false;
         currentX.value = withDelay(
-          1300,
+          900,
           withTiming(
             half,
             {
@@ -164,7 +164,7 @@ const AnimatedIntro = () => {
             (nextFinished) => {
               if (nextFinished) {
                 ballOpacity.value = withDelay(
-                  250,
+                  200,
                   withRepeat(
                     withTiming(0, {
                       duration: 550,
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    fontSize: 30,
+    fontSize: 32,
     fontWeight: '600',
     left: '0%',
     position: 'absolute',
