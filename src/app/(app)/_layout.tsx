@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unstable-nested-components */
+import { useAuth } from '@clerk/clerk-expo';
 import { Link, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { useAuth, useIsFirstTime } from '@/core';
 import { Pressable, Text } from '@/ui';
 import {
   Feed as FeedIcon,
@@ -13,20 +13,19 @@ import {
 import Welcome from '../welcome';
 
 export default function TabLayout() {
-  const status = useAuth.use.status();
-  const [isFirstTime] = useIsFirstTime();
+  const { isSignedIn } = useAuth();
   const hideSplash = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
   useEffect(() => {
-    if (status !== 'idle') {
+    if (isSignedIn !== null) {
       setTimeout(() => {
         hideSplash();
       }, 1000);
     }
-  }, [hideSplash, status]);
+  }, [hideSplash, isSignedIn]);
 
-  if (status === 'signOut' || isFirstTime) {
+  if (!isSignedIn) {
     return <Welcome />;
   }
   return (
