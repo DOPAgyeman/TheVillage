@@ -2,6 +2,10 @@ import Colors from '../ui/colors.js';
 
 export const content = [
   {
+    title: 'The Village',
+    fontColor: Colors.black,
+  },
+  {
     title: 'Welcome to The Village',
     fontColor: Colors.darkGreen,
   },
@@ -18,7 +22,7 @@ export const content = [
     fontColor: Colors.black,
   },
   {
-    title: 'After all, it takes a Village',
+    title: 'After all... it takes a Village',
     fontColor: Colors.purple,
   },
 ];

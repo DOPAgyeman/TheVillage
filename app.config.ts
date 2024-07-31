@@ -14,11 +14,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/icon.png',
   userInterfaceStyle: 'automatic',
-  splash: {
-    image: './assets/splash.png',
-    resizeMode: 'cover',
-    backgroundColor: '#01473D',
-  },
   updates: {
     fallbackToCacheTimeout: 0,
   },
@@ -26,9 +21,19 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: Env.BUNDLE_ID,
+    splash: {
+      image: './assets/splash.png',
+      resizeMode: 'cover',
+      backgroundColor: '#FFFFFF',
+      dark: {
+        image: './assets/splash-dark.png',
+        resizeMode: 'cover',
+        backgroundColor: '#181818',
+      },
+    },
   },
   androidNavigationBar: {
-    backgroundColor: '#01473D',
+    backgroundColor: '#FFFFFF',
   },
   experiments: {
     typedRoutes: true,
@@ -36,9 +41,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
-      backgroundColor: '#01473D',
+      backgroundColor: '#181818',
     },
     package: Env.PACKAGE,
+    splash: {
+      image: './assets/splash.png',
+      resizeMode: 'cover',
+      backgroundColor: '#FFFFFF',
+    },
   },
   web: {
     favicon: './assets/favicon.png',
