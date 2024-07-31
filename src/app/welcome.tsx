@@ -31,7 +31,7 @@ const Welcome = () => {
         >
           <Button
             label="Log in"
-            variant="secondary"
+            variant="default"
             size="lg"
             onPress={() => {}}
           />
