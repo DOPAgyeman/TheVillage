@@ -33,7 +33,6 @@ const Welcome = () => {
           <Button
             label="Log in"
             variant="default"
-            size="lg"
             onPress={() => {
               router.push('/login');
             }}
@@ -41,7 +40,6 @@ const Welcome = () => {
           <Button
             label="Sign up"
             variant="outline"
-            size="lg"
             onPress={() => {
               router.push('/sign-up');
             }}
