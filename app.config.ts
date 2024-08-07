@@ -32,9 +32,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     },
   },
-  androidNavigationBar: {
-    backgroundColor: '#FFFFFF',
-  },
   experiments: {
     typedRoutes: true,
   },

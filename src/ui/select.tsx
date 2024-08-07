@@ -14,7 +14,7 @@ import type { SvgProps } from 'react-native-svg';
 import Svg, { Path } from 'react-native-svg';
 import { tv } from 'tailwind-variants';
 
-import colors from '@/ui/colors';
+import colors from '@/constants/colors';
 import { CaretDown } from '@/ui/icons';
 
 import type { InputControllerType } from './input';
@@ -25,9 +25,9 @@ import { Text } from './text';
 const selectTv = tv({
   slots: {
     container: 'mb-4',
-    label: 'text-grey-100 mb-1 text-lg dark:text-neutral-100',
+    label: 'text-grey-100 dark:text-neutral-100 mb-1 text-lg',
     input:
-      'border-grey-50 mt-0 flex-row items-center justify-center rounded-xl border-[0.5px] p-3  dark:border-neutral-500 dark:bg-neutral-800',
+      'border-grey-50 dark:border-neutral-500 dark:bg-neutral-800 mt-0 flex-row items-center justify-center rounded-xl  border-[0.5px] p-3',
     inputValue: 'dark:text-neutral-100',
   },
 
@@ -123,10 +123,10 @@ const Option = React.memo(
   }) => {
     return (
       <Pressable
-        className="flex-row items-center border-b border-neutral-300 bg-white px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800"
+        className="border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 flex-row items-center border-b bg-white px-3 py-2"
         {...props}
       >
-        <Text className="flex-1 dark:text-neutral-100 ">{label}</Text>
+        <Text className="dark:text-neutral-100 flex-1 ">{label}</Text>
         {selected && <Check />}
       </Pressable>
     );

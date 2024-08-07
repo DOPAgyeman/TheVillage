@@ -11,15 +11,15 @@ import { I18nManager, StyleSheet, View } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
 import { tv } from 'tailwind-variants';
 
-import colors from './colors';
+import colors from '../constants/colors';
 import { Text } from './text';
 
 const inputTv = tv({
   slots: {
     container: 'mb-2',
-    label: 'text-grey-100 mb-1 text-lg dark:text-neutral-100',
+    label: 'text-grey-100 dark:text-neutral-100 mb-1 text-lg',
     input:
-      'mt-0 rounded-xl border-[0.5px] border-neutral-300 bg-neutral-100 px-4 py-3 font-inter text-base  font-medium leading-5 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white',
+      'border-neutral-300 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800 mt-0 rounded-xl border-[0.5px] px-4 py-3  font-inter text-base font-medium leading-5 dark:text-white',
   },
 
   variants: {
