@@ -3,9 +3,11 @@ import {
   DarkTheme as _DarkTheme,
   DefaultTheme,
 } from '@react-navigation/native';
+import * as NavigationBar from 'expo-navigation-bar';
 import { useColorScheme } from 'nativewind';
+import { Platform } from 'react-native';
 
-import colors from '@/ui/colors';
+import colors from '@/constants/colors';
 
 const DarkTheme: Theme = {
   ..._DarkTheme,
@@ -31,7 +33,14 @@ const LightTheme: Theme = {
 export function useThemeConfig() {
   const { colorScheme } = useColorScheme();
 
-  if (colorScheme === 'dark') return DarkTheme;
-
+  if (colorScheme === 'dark') {
+    if (Platform.OS === 'android') {
+      NavigationBar.setBackgroundColorAsync(colors.black);
+    }
+    return DarkTheme;
+  }
+  if (Platform.OS === 'android') {
+    NavigationBar.setBackgroundColorAsync(colors.white);
+  }
   return LightTheme;
 }

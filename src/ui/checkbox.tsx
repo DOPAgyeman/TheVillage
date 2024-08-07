@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-import colors from '@/ui/colors';
+import colors from '@/constants/colors';
 
 import { Text } from './text';
 
@@ -151,7 +151,7 @@ export const RadioIcon = ({ checked = false }: IconProps) => {
         width: SIZE,
         borderColor: color,
       }}
-      className="items-center justify-center rounded-[20px] border-2 bg-transparent"
+      className="bg-transparent items-center justify-center rounded-[20px] border-2"
       from={{ borderColor: '#CCCFD6' }}
       animate={{
         borderColor: color,

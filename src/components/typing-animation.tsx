@@ -17,7 +17,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ReText } from 'react-native-redash';
 
-import { content } from '../constants/welcome-animated-text.js';
+import { content } from '../constants/welcome-animated-text';
 
 const AnimatedIntro = () => {
   const { width } = useWindowDimensions();

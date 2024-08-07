@@ -1,4 +1,4 @@
-import Colors from '../ui/colors.js';
+import Colors from './colors';
 
 export const content = [
   {
