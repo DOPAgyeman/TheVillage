@@ -4,7 +4,7 @@ import Svg, { Path } from 'react-native-svg';
 
 import colors from '../../constants/colors';
 
-export const Share = ({ color = colors.lightGray, ...props }: SvgProps) => (
+export const Share = ({ color = colors.lightCream, ...props }: SvgProps) => (
   <Svg width={24} height={24} fill="none" viewBox="0 0 24 24" {...props}>
     <Path
       fillRule="evenodd"

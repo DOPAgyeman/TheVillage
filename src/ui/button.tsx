@@ -28,7 +28,7 @@ const button = tv({
   variants: {
     variant: {
       default: {
-        container: 'bg-primary dark:bg-lightGray',
+        container: 'bg-primary dark:bg-lightCream',
         label: 'text-white dark:text-black',
         indicator: 'text-white dark:text-black',
       },
@@ -38,7 +38,7 @@ const button = tv({
         indicator: 'text-white',
       },
       outline: {
-        container: 'border border-darkGreen',
+        container: 'border-darkGreen border',
         label: 'text-black dark:text-white',
         indicator: 'text-black dark:text-white',
       },
@@ -77,8 +77,8 @@ const button = tv({
     disabled: {
       true: {
         container: 'bg-gray dark:bg-gray',
-        label: 'text-black dark:text-lightGray',
-        indicator: 'text-gray dark:text-lightGray',
+        label: 'text-black dark:text-lightCream',
+        indicator: 'text-gray dark:text-lightCream',
       },
     },
     fullWidth: {

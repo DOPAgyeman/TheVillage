@@ -13,7 +13,7 @@ import { Github, Rate, Share, Support, Website } from '@/ui/icons';
 
 export default function Settings() {
   const { colorScheme } = useColorScheme();
-  const iconColor = colorScheme === 'dark' ? colors.black : colors.lightGray;
+  const iconColor = colorScheme === 'dark' ? colors.black : colors.lightCream;
   const { signOut } = useClerk();
   return (
     <>
