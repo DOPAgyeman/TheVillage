@@ -10,7 +10,7 @@ import {
   Style as StyleIcon,
 } from '@/ui/icons';
 
-import Welcome from '../welcome';
+import Onboarding from '../onboarding';
 
 export default function TabLayout() {
   const { isSignedIn } = useAuth();
@@ -26,7 +26,7 @@ export default function TabLayout() {
   }, [hideSplash, isSignedIn]);
 
   if (!isSignedIn) {
-    return <Welcome />;
+    return <Onboarding />;
   }
   return (
     <Tabs>

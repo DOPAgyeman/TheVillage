@@ -1,48 +1,103 @@
-import { useRouter } from 'expo-router';
-import React from 'react';
+/* eslint-disable max-lines-per-function */
+import type { FlashList } from '@shopify/flash-list';
+import { router } from 'expo-router';
+import React, { useCallback, useMemo } from 'react';
+import { Dimensions } from 'react-native';
+import Animated, { useSharedValue } from 'react-native-reanimated';
 
-import { Cover } from '@/components/cover';
-import { useIsFirstTime } from '@/core/hooks';
-import { Button, FocusAwareStatusBar, SafeAreaView, Text, View } from '@/ui';
-export default function Onboarding() {
-  const [_, setIsFirstTime] = useIsFirstTime();
-  const router = useRouter();
+import { ListIndicator } from '@/components/onboarding/onboarding-list-indicator';
+import { OnboardingLoginButton } from '@/components/onboarding/onboarding-login-button';
+import { OnboardingNextButton } from '@/components/onboarding/onboarding-next-button';
+import { OnboardingScrollList } from '@/components/onboarding/onboarding-scroll-list';
+import { OnboardingSkipButton } from '@/components/onboarding/onboarding-skip-button';
+import { ScrollBackgroundColor } from '@/components/onboarding/scroll-background-color';
+import { content } from '@/constants/onboarding-content';
+import { useScrollIndex } from '@/core/zustand/use-scroll-index';
+import { View } from '@/ui';
+
+const Onboarding = () => {
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+  const scrollX = React.useRef(useSharedValue(0)).current;
+  const scrollIndex = useScrollIndex.use.index();
+  const incrementIndex = useScrollIndex.use.incrementIndex();
+  const setIndex = useScrollIndex.use.setIndex();
+
+  const ref = React.useRef<FlashList<any>>(null);
+
+  const onPressNextButton = useCallback(() => {
+    if (scrollIndex === content.length - 1) {
+      router.push('/welcome');
+      return;
+    }
+    incrementIndex();
+  }, [incrementIndex, scrollIndex]);
+
+  const onPressSkipButton = useCallback(() => {
+    setIndex(2);
+  }, [setIndex]);
+
+  const onPressLoginButton = useCallback(() => {
+    console.log('login');
+  }, []);
+  useMemo(() => {
+    ref.current?.scrollToIndex({ animated: true, index: scrollIndex });
+  }, [scrollIndex]);
+
   return (
-    <View className="flex h-full items-center  justify-center">
-      <FocusAwareStatusBar />
-      <View className="w-full flex-1">
-        <Cover />
-      </View>
-      <View className="justify-end ">
-        <Text className="my-3 text-center text-5xl font-bold">
-          Obytes Starter
-        </Text>
-        <Text className="mb-2 text-center text-lg text-gray-600">
-          The right way to build your mobile app
-        </Text>
+    <Animated.View className="relative h-full items-center">
+      <ScrollBackgroundColor
+        scrollX={scrollX}
+        listContent={content}
+        windowWidth={windowWidth}
+      />
 
-        <Text className="my-1 pt-6 text-left text-lg">
-          🚀 Production-ready{' '}
-        </Text>
-        <Text className="my-1 text-left text-lg">
-          🥷 Developer experience + Productivity
-        </Text>
-        <Text className="my-1 text-left text-lg">
-          🧩 Minimal code and dependencies
-        </Text>
-        <Text className="my-1 text-left text-lg">
-          💪 well maintained third-party libraries
-        </Text>
+      <OnboardingScrollList
+        ref={ref}
+        scrollX={scrollX}
+        scrollIndex={scrollIndex}
+        setIndex={setIndex}
+        windowWidth={windowWidth}
+        windowHeight={windowHeight}
+      />
+      <View className="gap- absolute bottom-[28%] flex-row items-center gap-3">
+        {content.map((item, i) => {
+          return (
+            <ListIndicator
+              key={`Indicator-${i}`}
+              scrollX={scrollX}
+              listContent={content}
+              listContentIndex={i}
+              windowWidth={windowWidth}
+            />
+          );
+        })}
       </View>
-      <SafeAreaView className="mt-6">
-        <Button
-          label="Let's Get Started "
-          onPress={() => {
-            setIsFirstTime(false);
-            router.replace('/login');
-          }}
+
+      <OnboardingNextButton
+        scrollX={scrollX}
+        listContent={content}
+        windowWidth={windowWidth}
+        onPress={onPressNextButton}
+      />
+
+      {scrollIndex === 2 ? (
+        <OnboardingLoginButton
+          scrollX={scrollX}
+          listContent={content}
+          windowWidth={windowWidth}
+          onPress={onPressLoginButton}
         />
-      </SafeAreaView>
-    </View>
+      ) : (
+        <OnboardingSkipButton
+          scrollX={scrollX}
+          listContent={content}
+          windowWidth={windowWidth}
+          onPress={onPressSkipButton}
+        />
+      )}
+    </Animated.View>
   );
-}
+};
+
+export default Onboarding;

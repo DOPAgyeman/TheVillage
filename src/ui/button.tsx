@@ -61,7 +61,7 @@ const button = tv({
       iconAndText: {
         container: 'bg-transparent',
         label: 'text-black underline dark:text-white',
-        indicator: 'text-black dark:text-white',
+        indicator: 'text-white dark:text-black',
       },
     },
     size: {
