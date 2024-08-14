@@ -25,7 +25,6 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "src/constants/welcome-animated-text.ts",
     "src/constants/colors.ts"
   ]
 }

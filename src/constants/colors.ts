@@ -1,14 +1,14 @@
 const colors = {
-  primary: '#01473D',
-  darkGreen: '#2B3C31',
+  primary: '#2B3C31',
+  secondaryGreen: '#01473D',
   lightGreen: '#01726E',
   black: '#181818',
   white: '#F4F4F4',
-  lightGray: '#F2F0E9',
+  lightCream: '#F2F0E9',
   cream: '#E8DFD3',
-  pink: '#DBC4BD',
-  purple: '#434756',
-  brown: '#863A29',
+  pink: '#DECAC4',
+  purple: '#5A6074',
+  brown: '#32241C',
   gray: '#E4E3DE',
 };
 

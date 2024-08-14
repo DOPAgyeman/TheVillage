@@ -97,7 +97,7 @@ export const Options = React.forwardRef<BottomSheetModal, OptionsProps>(
         index={0}
         snapPoints={snapPoints}
         backgroundStyle={{
-          backgroundColor: isDark ? colors.lightGray : colors.white,
+          backgroundColor: isDark ? colors.lightCream : colors.white,
         }}
       >
         <List

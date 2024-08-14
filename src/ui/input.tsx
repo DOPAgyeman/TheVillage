@@ -98,7 +98,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
       <NTextInput
         testID={testID}
         ref={ref}
-        placeholderTextColor={colors.lightGray}
+        placeholderTextColor={colors.lightCream}
         className={styles.input()}
         onBlur={onBlur}
         onFocus={onFocus}
