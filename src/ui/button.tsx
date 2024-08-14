@@ -1,7 +1,8 @@
 /* eslint-disable max-lines-per-function */
+import type { ReactNode } from 'react';
 import React from 'react';
-import type { PressableProps, View } from 'react-native';
-import { ActivityIndicator, Pressable, Text } from 'react-native';
+import type { PressableProps, StyleProp, View, ViewStyle } from 'react-native';
+import { ActivityIndicator, Pressable } from 'react-native';
 import Animated, {
   cancelAnimation,
   Easing,
@@ -57,6 +58,11 @@ const button = tv({
         label: 'text-black',
         indicator: 'text-black',
       },
+      iconAndText: {
+        container: 'bg-transparent',
+        label: 'text-black underline dark:text-white',
+        indicator: 'text-black dark:text-white',
+      },
     },
     size: {
       default: {
@@ -104,6 +110,11 @@ interface Props extends ButtonVariants, Omit<PressableProps, 'disabled'> {
   loading?: boolean;
   className?: string;
   textClassName?: string;
+  animateButtonStyle?: [ViewStyle] | StyleProp<any>;
+  animateTextStyle?: [ViewStyle] | StyleProp<any>;
+  animateIconStyle?: [ViewStyle] | StyleProp<any>;
+  icon?: ReactNode;
+  customText?: ReactNode;
 }
 
 export const Button = React.forwardRef<View, Props>(
@@ -116,6 +127,11 @@ export const Button = React.forwardRef<View, Props>(
       size = 'default',
       className = '',
       testID,
+      animateButtonStyle,
+      animateTextStyle,
+      animateIconStyle,
+      icon,
+      customText,
       textClassName = '',
       ...props
     },
@@ -184,42 +200,52 @@ export const Button = React.forwardRef<View, Props>(
     );
 
     return (
-      <Animated.View style={buttonStyle}>
-        <Pressable
-          disabled={disabled || loading}
-          className={styles.container({ className })}
-          {...props}
-          ref={ref}
-          testID={testID}
-          onPressIn={() => {
-            hasPressed.value = true;
-          }}
-          onPressOut={() => {
-            hasPressed.value = false;
-          }}
-        >
-          {props.children ? (
-            props.children
-          ) : (
-            <>
-              {loading ? (
-                <ActivityIndicator
-                  size="small"
-                  className={styles.indicator()}
-                  testID={testID ? `${testID}-activity-indicator` : undefined}
-                />
-              ) : (
-                <Text
-                  testID={testID ? `${testID}-label` : undefined}
-                  className={styles.label({ className: textClassName })}
-                >
-                  {text}
-                </Text>
-              )}
-            </>
-          )}
-        </Pressable>
-      </Animated.View>
+      <Pressable
+        disabled={disabled || loading}
+        className={styles.container({ className })}
+        {...props}
+        ref={ref}
+        testID={testID}
+        onPressIn={() => {
+          hasPressed.value = true;
+        }}
+        onPressOut={() => {
+          hasPressed.value = false;
+        }}
+      >
+        {props.children ? (
+          props.children
+        ) : (
+          <Animated.View style={[buttonStyle, animateButtonStyle]}>
+            {loading ? (
+              <ActivityIndicator
+                size="small"
+                className={styles.indicator()}
+                testID={testID ? `${testID}-activity-indicator` : undefined}
+              />
+            ) : variant === 'iconAndText' ? (
+              <>
+                <Animated.View style={animateIconStyle}>{icon}</Animated.View>
+                <Animated.View style={animateTextStyle}>
+                  <Animated.Text
+                    className={styles.label({ className: textClassName })}
+                  >
+                    {customText}
+                  </Animated.Text>
+                </Animated.View>
+              </>
+            ) : (
+              <Animated.Text
+                style={animateTextStyle}
+                testID={testID ? `${testID}-label` : undefined}
+                className={styles.label({ className: textClassName })}
+              >
+                {text}
+              </Animated.Text>
+            )}
+          </Animated.View>
+        )}
+      </Pressable>
     );
   }
 );
