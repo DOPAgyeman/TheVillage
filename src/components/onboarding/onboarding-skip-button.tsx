@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Animated, {
   interpolateColor,
   type SharedValue,
@@ -12,15 +12,19 @@ type OnboardingSkipButtonProps = {
   scrollX: SharedValue<number>;
   listContent: OnboardingContent[];
   windowWidth: number;
-  onPress: () => void;
+  setIndex: (index: number) => void;
 };
 
 export const OnboardingSkipButton = ({
   scrollX,
   listContent,
   windowWidth,
-  onPress,
+  setIndex,
 }: OnboardingSkipButtonProps) => {
+  const onPressSkipButton = useCallback(() => {
+    setIndex(2);
+  }, [setIndex]);
+
   const animateTextStyle = useAnimatedStyle(() => {
     return {
       color: interpolateColor(
@@ -37,7 +41,7 @@ export const OnboardingSkipButton = ({
         variant="ghost"
         label={'Skip'}
         animateTextStyle={animateTextStyle}
-        onPress={onPress}
+        onPress={onPressSkipButton}
         textClassName="no-underline"
       />
     </Animated.View>

@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list';
 import type { JSXElementConstructor, ReactElement } from 'react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import Animated, {
@@ -43,10 +43,17 @@ type OnboardingScrollListProps = {
   windowHeight: number;
 };
 
-export const OnboardingScrollList = React.forwardRef<
-  FlashList<any>,
-  OnboardingScrollListProps
->(({ scrollX, scrollIndex, setIndex, windowWidth, windowHeight }, ref) => {
+export const OnboardingScrollList = ({
+  scrollX,
+  scrollIndex,
+  setIndex,
+  windowWidth,
+  windowHeight,
+}: OnboardingScrollListProps) => {
+  const ref = React.useRef<FlashList<any>>(null);
+  useMemo(() => {
+    ref.current?.scrollToIndex({ animated: true, index: scrollIndex });
+  }, [scrollIndex]);
   return (
     <AnimatedFlashList
       ref={ref}
@@ -105,4 +112,4 @@ export const OnboardingScrollList = React.forwardRef<
       }}
     />
   );
-});
+};

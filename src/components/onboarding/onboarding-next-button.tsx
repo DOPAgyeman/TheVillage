@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function */
-import React from 'react';
+import { router } from 'expo-router';
+import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import {
   interpolate,
@@ -19,15 +20,25 @@ type OnboardingNextButtonProps = {
   scrollX: SharedValue<number>;
   listContent: OnboardingContent[];
   windowWidth: number;
-  onPress: () => void;
+  incrementIndex: () => void;
+  scrollIndex: number;
 };
 
 export const OnboardingNextButton = ({
   scrollX,
   listContent,
   windowWidth,
-  onPress,
+  incrementIndex,
+  scrollIndex,
 }: OnboardingNextButtonProps) => {
+  const onPressNextButton = useCallback(() => {
+    if (scrollIndex === listContent.length - 1) {
+      router.push('/welcome');
+      return;
+    }
+    incrementIndex();
+  }, [incrementIndex, scrollIndex, listContent]);
+
   const color = useSharedValue<string>('#000000');
   var buttonText = 'Get started';
 
@@ -138,7 +149,7 @@ export const OnboardingNextButton = ({
           />
         }
         customText={'Get started'}
-        onPress={onPress}
+        onPress={onPressNextButton}
         label={buttonText}
       />
     </View>
