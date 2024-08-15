@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Animated, {
   interpolateColor,
   type SharedValue,
@@ -12,15 +12,16 @@ type OnboardingLoginButtonProps = {
   scrollX: SharedValue<number>;
   listContent: OnboardingContent[];
   windowWidth: number;
-  onPress: () => void;
 };
 
 export const OnboardingLoginButton = ({
   scrollX,
   listContent,
   windowWidth,
-  onPress,
 }: OnboardingLoginButtonProps) => {
+  const onPressLoginButton = useCallback(() => {
+    console.log('login');
+  }, []);
   const animateTextStyle = useAnimatedStyle(() => {
     return {
       color: interpolateColor(
@@ -37,7 +38,7 @@ export const OnboardingLoginButton = ({
         variant="ghost"
         label={'Log in'}
         animateTextStyle={animateTextStyle}
-        onPress={onPress}
+        onPress={onPressLoginButton}
         textClassName="no-underline"
       />
     </Animated.View>

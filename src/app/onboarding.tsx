@@ -1,7 +1,4 @@
-/* eslint-disable max-lines-per-function */
-import type { FlashList } from '@shopify/flash-list';
-import { router } from 'expo-router';
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import { Dimensions } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 
@@ -23,27 +20,6 @@ const Onboarding = () => {
   const incrementIndex = useScrollIndex.use.incrementIndex();
   const setIndex = useScrollIndex.use.setIndex();
 
-  const ref = React.useRef<FlashList<any>>(null);
-
-  const onPressNextButton = useCallback(() => {
-    if (scrollIndex === content.length - 1) {
-      router.push('/welcome');
-      return;
-    }
-    incrementIndex();
-  }, [incrementIndex, scrollIndex]);
-
-  const onPressSkipButton = useCallback(() => {
-    setIndex(2);
-  }, [setIndex]);
-
-  const onPressLoginButton = useCallback(() => {
-    console.log('login');
-  }, []);
-  useMemo(() => {
-    ref.current?.scrollToIndex({ animated: true, index: scrollIndex });
-  }, [scrollIndex]);
-
   return (
     <Animated.View className="relative h-full items-center">
       <ScrollBackgroundColor
@@ -53,7 +29,6 @@ const Onboarding = () => {
       />
 
       <OnboardingScrollList
-        ref={ref}
         scrollX={scrollX}
         scrollIndex={scrollIndex}
         setIndex={setIndex}
@@ -78,7 +53,8 @@ const Onboarding = () => {
         scrollX={scrollX}
         listContent={content}
         windowWidth={windowWidth}
-        onPress={onPressNextButton}
+        incrementIndex={incrementIndex}
+        scrollIndex={scrollIndex}
       />
 
       {scrollIndex === 2 ? (
@@ -86,14 +62,13 @@ const Onboarding = () => {
           scrollX={scrollX}
           listContent={content}
           windowWidth={windowWidth}
-          onPress={onPressLoginButton}
         />
       ) : (
         <OnboardingSkipButton
           scrollX={scrollX}
           listContent={content}
           windowWidth={windowWidth}
-          onPress={onPressSkipButton}
+          setIndex={setIndex}
         />
       )}
     </Animated.View>
