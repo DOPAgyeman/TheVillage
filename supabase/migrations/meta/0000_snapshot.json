@@ -1,16 +1,99 @@
 {
-  "id": "3e105298-2c56-4af6-87db-e45516434eb2",
+  "id": "ec20d51b-b944-4665-ac5d-e76c9183d0d5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.tasks": {
+      "name": "tasks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "village_id": {
+          "name": "village_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date_and_time": {
+          "name": "date_and_time",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_recurring": {
+          "name": "is_recurring",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "frequency": {
+          "name": "frequency",
+          "type": "interval day",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "people_required": {
+          "name": "people_required",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "values_associated": {
+          "name": "values_associated",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "task_priority": {
+          "name": "task_priority",
+          "type": "task_priority",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "completed": {
+          "name": "completed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.users": {
       "name": "users",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -46,7 +129,8 @@
         },
         "sign_in_methods": {
           "name": "sign_in_methods",
-          "type": "varchar",
+          "type": "sign_in_methods",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         }
@@ -56,13 +140,59 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "public.users_to_tasks": {
+      "name": "users_to_tasks",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "task_id": {
+          "name": "task_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "users_to_tasks_user_id_users_id_fk": {
+          "name": "users_to_tasks_user_id_users_id_fk",
+          "tableFrom": "users_to_tasks",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "users_to_tasks_task_id_tasks_id_fk": {
+          "name": "users_to_tasks_task_id_tasks_id_fk",
+          "tableFrom": "users_to_tasks",
+          "tableTo": "tasks",
+          "columnsFrom": ["task_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "users_to_tasks_user_id_task_id_pk": {
+          "name": "users_to_tasks_user_id_task_id_pk",
+          "columns": ["user_id", "task_id"]
+        }
+      },
+      "uniqueConstraints": {}
+    },
     "public.users_to_villages": {
       "name": "users_to_villages",
       "schema": "",
       "columns": {
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -81,7 +211,7 @@
           "tableTo": "users",
           "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "users_to_villages_village_id_villages_id_fk": {
@@ -90,7 +220,7 @@
           "tableTo": "villages",
           "columnsFrom": ["village_id"],
           "columnsTo": ["id"],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -129,6 +259,13 @@
           "type": "date",
           "primaryKey": false,
           "notNull": true
+        },
+        "values": {
+          "name": "values",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{\"Love\",\"Joy\",\"Peace\",\"Patience\",\"Kindness\",\"Goodness\",\"Faithfulness\"}'"
         }
       },
       "indexes": {},
@@ -137,7 +274,18 @@
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "public.sign_in_methods": {
+      "name": "sign_in_methods",
+      "schema": "public",
+      "values": ["email", "google", "facebook", "apple"]
+    },
+    "public.task_priority": {
+      "name": "task_priority",
+      "schema": "public",
+      "values": ["low", "medium", "high"]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "_meta": {

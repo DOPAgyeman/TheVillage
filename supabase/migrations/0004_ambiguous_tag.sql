@@ -1,1 +1,0 @@
-ALTER TABLE "villages" ADD COLUMN "values" text[] DEFAULT '{"Love","Joy","Peace","Patience","Kindness","Goodness","Faithfulness"}' NOT NULL;

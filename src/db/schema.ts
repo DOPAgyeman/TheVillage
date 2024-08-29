@@ -22,7 +22,7 @@ export const signInMethods = pgEnum('sign_in_methods', [
 export const taskPriority = pgEnum('task_priority', ['low', 'medium', 'high']);
 
 export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
+  id: text('id').primaryKey(),
   firstName: text('first_name').notNull(),
   lastName: text('last_name').notNull(),
   fullName: text('full_name').notNull(),
@@ -63,7 +63,7 @@ export const villagesRelations = relations(villages, ({ many }) => ({
 export const usersToVillages = pgTable(
   'users_to_villages',
   {
-    userId: integer('user_id')
+    userId: text('user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
 
@@ -92,7 +92,7 @@ export const usersToVillagesRelations = relations(
 
 export const Tasks = pgTable('tasks', {
   id: serial('id').primaryKey(),
-  userId: integer('user_id').notNull(),
+  userId: text('user_id').notNull(),
   villageId: integer('village_id').notNull(),
   name: text('name').notNull(),
   description: text('description').notNull(),
@@ -117,7 +117,7 @@ export const tasksRelations = relations(Tasks, ({ one }) => ({
 export const usersToTasks = pgTable(
   'users_to_tasks',
   {
-    userId: integer('user_id')
+    userId: text('user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     task: integer('task_id')

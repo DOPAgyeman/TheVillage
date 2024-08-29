@@ -1,1 +1,0 @@
-ALTER TABLE "users" ALTER COLUMN "sign_in_methods" DROP NOT NULL;
