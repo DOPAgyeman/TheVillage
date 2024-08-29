@@ -22,8 +22,7 @@ export const Text = ({
     () =>
       twMerge(
         'text-base text-black dark:text-white font-inter font-normal text-center',
-        className,
-        'leading-8'
+        className
       ),
     [className]
   );

@@ -16,10 +16,10 @@ import { Text } from './text';
 
 const inputTv = tv({
   slots: {
-    container: 'mb-2',
+    container: '',
     label: 'text-grey-100 dark:text-neutral-100 mb-1 text-lg',
     input:
-      'border-neutral-300 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800 mt-0 rounded-xl border-[0.5px] px-4 py-3  font-inter text-base font-medium leading-5 dark:text-white',
+      'w-full rounded-xl border border-gray bg-white px-5 py-6 text-sm text-black placeholder-black focus:border-gray focus:ring-gray dark:border-gray dark:bg-gray dark:text-gray dark:placeholder-cream dark:focus:border-primary dark:focus:ring-primary',
   },
 
   variants: {
@@ -98,7 +98,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
       <NTextInput
         testID={testID}
         ref={ref}
-        placeholderTextColor={colors.lightCream}
+        placeholderTextColor={colors.darkGray}
         className={styles.input()}
         onBlur={onBlur}
         onFocus={onFocus}

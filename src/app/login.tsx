@@ -1,11 +1,13 @@
 import { useSignIn } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
 import React from 'react';
+import { Dimensions } from 'react-native';
 
 import type { LoginFormProps } from '@/components/login-form';
 import { LoginForm } from '@/components/login-form';
+import Colors from '@/constants/colors';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
-import { FocusAwareStatusBar } from '@/ui';
+import { Button, Image, SafeAreaView, Text, View } from '@/ui';
 
 export default function Login() {
   const router = useRouter();
@@ -39,10 +41,39 @@ export default function Login() {
       console.error(JSON.stringify(err, null, 2));
     }
   };
+  const windowWidth = Dimensions.get('window').width;
   return (
-    <>
-      <FocusAwareStatusBar />
-      <LoginForm onSubmit={onSubmit} />
-    </>
+    <SafeAreaView
+      className="relative w-screen bg-black dark:bg-black"
+      style={{ backgroundColor: Colors.black }}
+    >
+      <View className="flex h-full w-screen flex-col justify-center gap-5 px-5">
+        <View className="absolute top-2 self-center">
+          <Image
+            source={require('/assets/icon.png')}
+            style={{
+              width: windowWidth / 6,
+              height: windowWidth / 6,
+            }}
+            contentFit="contain"
+          />
+        </View>
+
+        <LoginForm onSubmit={onSubmit} />
+      </View>
+      <View className="absolute inset-x-0 bottom-8">
+        <View className="flex flex-row items-center justify-center gap-0">
+          <Text className="text-sm text-white dark:text-white">
+            Don't have an account?{' '}
+          </Text>
+          <Button
+            variant="ghost"
+            label=" Sign up"
+            textClassName="no-underline text-sm font-semibold text-white dark:text-white"
+            className="px-0"
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }

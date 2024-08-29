@@ -3,7 +3,6 @@ import { Dimensions } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 
 import { ListIndicator } from '@/components/onboarding/onboarding-list-indicator';
-import { OnboardingLoginButton } from '@/components/onboarding/onboarding-login-button';
 import { OnboardingNextButton } from '@/components/onboarding/onboarding-next-button';
 import { OnboardingScrollList } from '@/components/onboarding/onboarding-scroll-list';
 import { OnboardingSkipButton } from '@/components/onboarding/onboarding-skip-button';
@@ -55,15 +54,10 @@ const Onboarding = () => {
         windowWidth={windowWidth}
         incrementIndex={incrementIndex}
         scrollIndex={scrollIndex}
+        setIndex={setIndex}
       />
 
-      {scrollIndex === 2 ? (
-        <OnboardingLoginButton
-          scrollX={scrollX}
-          listContent={content}
-          windowWidth={windowWidth}
-        />
-      ) : (
+      {scrollIndex !== 2 && (
         <OnboardingSkipButton
           scrollX={scrollX}
           listContent={content}

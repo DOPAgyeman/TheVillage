@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import type { ReactNode } from 'react';
 import React from 'react';
-import type { PressableProps, StyleProp, View, ViewStyle } from 'react-native';
+import type { PressableProps, StyleProp, ViewStyle } from 'react-native';
 import { ActivityIndicator, Pressable } from 'react-native';
 import Animated, {
   cancelAnimation,
@@ -18,11 +18,11 @@ import {
 import type { VariantProps } from 'tailwind-variants';
 import { tv } from 'tailwind-variants';
 
+import type { View } from '@/ui';
 const button = tv({
   slots: {
-    container:
-      'my-2 flex flex-row items-center justify-center rounded-full px-4',
-    label: 'font-inter text-base font-semibold',
+    container: 'flex flex-row items-center justify-center rounded-full px-4',
+    label: 'font-inter text-base font-medium',
     indicator: 'h-6 text-white',
   },
 
@@ -30,7 +30,7 @@ const button = tv({
     variant: {
       default: {
         container: 'bg-primary dark:bg-lightCream',
-        label: 'text-white dark:text-black',
+        label: 'text-lg text-white dark:text-black',
         indicator: 'text-white dark:text-black',
       },
       secondary: {
@@ -66,11 +66,11 @@ const button = tv({
     },
     size: {
       default: {
-        container: 'h-[3.4rem]',
+        container: 'h-[4.25rem]',
         label: 'text-base',
       },
       lg: {
-        container: 'h-[3.4rem]',
+        container: 'h-20',
         label: 'text-base',
       },
       sm: {
@@ -78,7 +78,7 @@ const button = tv({
         label: 'text-base',
         indicator: 'h-2',
       },
-      icon: { container: 'h-9 w-9' },
+      icon: { container: 'h-14 w-14' },
     },
     disabled: {
       true: {
@@ -114,7 +114,6 @@ interface Props extends ButtonVariants, Omit<PressableProps, 'disabled'> {
   animateTextStyle?: [ViewStyle] | StyleProp<any>;
   animateIconStyle?: [ViewStyle] | StyleProp<any>;
   icon?: ReactNode;
-  customText?: ReactNode;
 }
 
 export const Button = React.forwardRef<View, Props>(
@@ -131,8 +130,7 @@ export const Button = React.forwardRef<View, Props>(
       animateTextStyle,
       animateIconStyle,
       icon,
-      customText,
-      textClassName = '',
+      textClassName = 'text-lg',
       ...props
     },
     ref
@@ -163,7 +161,7 @@ export const Button = React.forwardRef<View, Props>(
         if (pressed === true) {
           cancelAnimation(buttonOpacity);
           cancelAnimation(buttonScale);
-          buttonOpacity.value = withTiming(0.8, {
+          buttonOpacity.value = withTiming(0.925, {
             duration: 200,
             easing: Easing.elastic(0),
             reduceMotion: ReduceMotion.System,
@@ -200,52 +198,54 @@ export const Button = React.forwardRef<View, Props>(
     );
 
     return (
-      <Pressable
-        disabled={disabled || loading}
-        className={styles.container({ className })}
-        {...props}
-        ref={ref}
-        testID={testID}
-        onPressIn={() => {
-          hasPressed.value = true;
-        }}
-        onPressOut={() => {
-          hasPressed.value = false;
-        }}
-      >
-        {props.children ? (
-          props.children
-        ) : (
-          <Animated.View style={[buttonStyle, animateButtonStyle]}>
-            {loading ? (
-              <ActivityIndicator
-                size="small"
-                className={styles.indicator()}
-                testID={testID ? `${testID}-activity-indicator` : undefined}
-              />
-            ) : variant === 'iconAndText' ? (
-              <>
-                <Animated.View style={animateIconStyle}>{icon}</Animated.View>
-                <Animated.View style={animateTextStyle}>
-                  <Animated.Text
-                    className={styles.label({ className: textClassName })}
-                  >
-                    {customText}
-                  </Animated.Text>
-                </Animated.View>
-              </>
-            ) : (
-              <Animated.Text
-                style={animateTextStyle}
-                testID={testID ? `${testID}-label` : undefined}
-                className={styles.label({ className: textClassName })}
-              >
-                {text}
-              </Animated.Text>
-            )}
-          </Animated.View>
-        )}
-      </Pressable>
+      <Animated.View style={buttonStyle}>
+        <Pressable
+          disabled={disabled || loading}
+          className={styles.container({ className })}
+          {...props}
+          ref={ref}
+          testID={testID}
+          onPressIn={() => {
+            hasPressed.value = true;
+          }}
+          onPressOut={() => {
+            hasPressed.value = false;
+          }}
+        >
+          {props.children ? (
+            props.children
+          ) : (
+            <Animated.View style={animateButtonStyle}>
+              {loading ? (
+                <ActivityIndicator
+                  size="small"
+                  className={styles.indicator()}
+                  testID={testID ? `${testID}-activity-indicator` : undefined}
+                />
+              ) : variant === 'iconAndText' ? (
+                <>
+                  <Animated.View style={animateIconStyle}>{icon}</Animated.View>
+                  <Animated.View style={animateTextStyle}>
+                    <Animated.Text
+                      className={styles.label({ className: textClassName })}
+                    >
+                      {text}
+                    </Animated.Text>
+                  </Animated.View>
+                </>
+              ) : (
+                <Animated.Text
+                  style={animateTextStyle}
+                  testID={testID ? `${testID}-label` : undefined}
+                  className={styles.label({ className: textClassName })}
+                >
+                  {text}
+                </Animated.Text>
+              )}
+            </Animated.View>
+          )}
+        </Pressable>
+      </Animated.View>
     );
   }
 );
