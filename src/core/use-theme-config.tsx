@@ -13,7 +13,7 @@ const DarkTheme: Theme = {
   ..._DarkTheme,
   colors: {
     ..._DarkTheme.colors,
-    primary: colors.primary[200],
+    primary: colors.primary,
     background: colors.black,
     text: colors.black,
     border: colors.black,

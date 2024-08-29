@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import type { Href } from 'expo-router';
 import { router } from 'expo-router';
 import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
@@ -22,6 +23,7 @@ type OnboardingNextButtonProps = {
   windowWidth: number;
   incrementIndex: () => void;
   scrollIndex: number;
+  setIndex: (index: number) => void;
 };
 
 export const OnboardingNextButton = ({
@@ -30,17 +32,18 @@ export const OnboardingNextButton = ({
   windowWidth,
   incrementIndex,
   scrollIndex,
+  setIndex,
 }: OnboardingNextButtonProps) => {
   const onPressNextButton = useCallback(() => {
     if (scrollIndex === listContent.length - 1) {
-      router.push('/welcome');
+      setIndex(0);
+      router.replace('/get-started' as Href<'get-started'>);
       return;
     }
     incrementIndex();
-  }, [incrementIndex, scrollIndex, listContent]);
+  }, [incrementIndex, scrollIndex, listContent, setIndex]);
 
   const color = useSharedValue<string>('#000000');
-  var buttonText = 'Get started';
 
   const iconBaseStyles = StyleSheet.create({
     container: {
@@ -133,14 +136,14 @@ export const OnboardingNextButton = ({
     }
   );
   return (
-    <View className="absolute bottom-[10%]">
+    <View className="absolute bottom-24">
       <Button
         testID="onboarding-button"
         animateButtonStyle={[backgroundColorStyle, buttonBaseStyles.container]}
         animateTextStyle={[animateTextStyle, textBaseStyles.container]}
         animateIconStyle={[animateIconStyle, iconBaseStyles.container]}
         variant="iconAndText"
-        textClassName="text-white dark:text-black no-underline text-lg"
+        textClassName="text-white dark:text-white no-underline text-lg"
         icon={
           <ArrowRightIcon
             color={color}
@@ -148,9 +151,8 @@ export const OnboardingNextButton = ({
             height={windowWidth / 8}
           />
         }
-        customText={'Get started'}
         onPress={onPressNextButton}
-        label={buttonText}
+        label={'Get started'}
       />
     </View>
   );
