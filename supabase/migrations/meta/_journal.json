@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1724954974735,
+      "tag": "0000_tired_runaways",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1724961284273,
+      "tag": "0001_great_gateway",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724962395564,
+      "tag": "0002_crazy_serpent_society",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1724963435863,
+      "tag": "0003_fat_ted_forrester",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1724963821198,
+      "tag": "0004_ambiguous_tag",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1724965666747,
+      "tag": "0005_stale_brother_voodoo",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1724965879908,
+      "tag": "0006_calm_alice",
+      "breakpoints": true
+    }
+  ]
+}

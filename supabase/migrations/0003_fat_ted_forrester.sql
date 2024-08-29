@@ -1,0 +1,1 @@
+ALTER TABLE "users" ALTER COLUMN "sign_in_methods" SET NOT NULL;
