@@ -18,7 +18,11 @@
     "cli",
     "android",
     "ios",
-    "lint-staged.config.js"
+    "lint-staged.config.js",
+    "env.js",
+    ".env.development",
+    ".env.production",
+    ".env.staging"
   ],
   "include": [
     "**/*.ts",
