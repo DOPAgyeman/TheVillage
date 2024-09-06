@@ -2,16 +2,18 @@ import { create } from 'zustand';
 
 import { createSelectors } from '../utils';
 
-interface ScrollIndex {
+interface OnboardingScrollIndex {
   index: number;
   incrementIndex: () => void;
   setIndex: (index: number) => void;
 }
 
-const _useScrollIndex = create<ScrollIndex>()((set) => ({
+const _useOnboardingScrollIndex = create<OnboardingScrollIndex>()((set) => ({
   index: 0,
   incrementIndex: () => set((state) => ({ index: state.index + 1 })),
   setIndex: (newIndex) => set({ index: newIndex }),
 }));
 
-export const useScrollIndex = createSelectors(_useScrollIndex);
+export const useOnboardingScrollIndex = createSelectors(
+  _useOnboardingScrollIndex
+);

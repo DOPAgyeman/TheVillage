@@ -1,39 +1,11 @@
-import { FlashList } from '@shopify/flash-list';
-import type { JSXElementConstructor, ReactElement } from 'react';
-import React, { useMemo } from 'react';
-import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import React from 'react';
 import type { SharedValue } from 'react-native-reanimated';
-import Animated, {
-  runOnJS,
-  useAnimatedScrollHandler,
-} from 'react-native-reanimated';
 
 import type { OnboardingContent } from '@/constants/onboarding-content';
 import { content } from '@/constants/onboarding-content';
 import { Image, Text, View } from '@/ui';
 
-type AnimatedFlashListProps = {
-  data: OnboardingContent[];
-  horizontal: boolean;
-  showsHorizontalScrollIndicator: boolean;
-  pagingEnabled: boolean;
-  keyExtractor: (item: OnboardingContent) => string;
-  scrollEventThrottle: number;
-  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-  renderItem: (
-    item: any
-  ) => ReactElement<any | string | JSXElementConstructor<any>>;
-  estimatedItemSize: number;
-  initialScrollIndex: number;
-};
-
-const AnimatedFlashList = Animated.createAnimatedComponent(
-  React.forwardRef(
-    (props: AnimatedFlashListProps, ref: React.Ref<FlashList<any>>) => (
-      <FlashList<any> {...props} ref={ref} />
-    )
-  )
-);
+import AnimatedFlashList from '../animated-flash-list';
 
 type OnboardingScrollListProps = {
   scrollX: SharedValue<number>;
@@ -50,33 +22,18 @@ export const OnboardingScrollList = ({
   windowWidth,
   windowHeight,
 }: OnboardingScrollListProps) => {
-  const ref = React.useRef<FlashList<any>>(null);
-  useMemo(() => {
-    ref.current?.scrollToIndex({ animated: true, index: scrollIndex });
-  }, [scrollIndex]);
   return (
     <AnimatedFlashList
-      ref={ref}
+      scrollX={scrollX}
+      setIndex={setIndex}
+      scrollIndex={scrollIndex}
       data={content}
       horizontal
       showsHorizontalScrollIndicator={false}
+      scrollEnabled
       pagingEnabled
-      keyExtractor={(item) => item.key}
+      keyExtractor={(item: OnboardingContent) => item.key}
       scrollEventThrottle={32}
-      onScroll={useAnimatedScrollHandler({
-        onScroll: (event) => {
-          scrollX.value = event.contentOffset.x;
-        },
-        onMomentumEnd: () => {
-          if (scrollX.value === 0 && scrollIndex !== 0) {
-            runOnJS(setIndex)(0);
-          } else if (scrollX.value === windowWidth && scrollIndex !== 1) {
-            runOnJS(setIndex)(1);
-          } else if (scrollX.value === windowWidth * 2 && scrollIndex !== 2) {
-            runOnJS(setIndex)(2);
-          }
-        },
-      })}
       estimatedItemSize={361}
       initialScrollIndex={scrollIndex}
       renderItem={({ item }: { item: OnboardingContent }) => {

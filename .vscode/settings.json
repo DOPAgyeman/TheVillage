@@ -1,34 +1,40 @@
 {
-  "editor.tabSize": 2,
-  "editor.detectIndentation": false,
-  "search.exclude": {
-    "yarn.lock": true
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode",
+    "editor.formatOnSave": true
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.format.enable": true,
   "[javascript][typescript][typescriptreact]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": [
       "source.addMissingImports",
       "source.fixAll.eslint"
-    ]
+    ],
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true
   },
   "[json][jsonc]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   },
-  "[astro]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "astro-build.astro-vscode"
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
   },
   "cSpell.words": ["Flashlist", "Lato", "Pressable", "signup"],
-  "i18n-ally.localesPaths": ["src/translations/"],
+  "deno.enablePaths": ["supabase/functions"],
+  "deno.lint": true,
+  "deno.unstable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "eslint.format.enable": true,
+  "i18n-ally.disabled": false,
   "i18n-ally.keystyle": "nested",
-  "i18n-ally.disabled": false, // make sure to disable i18n-ally in your global setting and only enable it for such projects
+  "i18n-ally.localesPaths": ["src/translations/"],
+  "search.exclude": {
+    "yarn.lock": true
+  },
   "tailwindCSS.experimental.classRegex": [
     ["tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

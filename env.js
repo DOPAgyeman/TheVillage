@@ -87,6 +87,9 @@ const client = z.object({
 const buildTime = z.object({
   EXPO_ACCOUNT_OWNER: z.string(),
   EAS_PROJECT_ID: z.string(),
+  DATABASE_URL: z.string(),
+  SUPABASE_API_URL: z.string(),
+  SUPABASE_SERVICE_KEY: z.string(),
   // ADD YOUR BUILD TIME ENV VARS HERE
 });
 
@@ -115,6 +118,9 @@ const _clientEnv = {
 const _buildTimeEnv = {
   EXPO_ACCOUNT_OWNER,
   EAS_PROJECT_ID,
+  DATABASE_URL: String(process.env.DATABASE_URL),
+  SUPABASE_API_URL: String(process.env.SUPABASE_API_URL),
+  SUPABASE_SERVICE_KEY: String(process.env.SUPABASE_SERVICE_KEY),
   // ADD YOUR ENV VARS HERE TOO
   //SECRET_KEY: process.env.SECRET_KEY,
 };

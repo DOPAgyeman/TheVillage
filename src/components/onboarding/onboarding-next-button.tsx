@@ -39,8 +39,9 @@ export const OnboardingNextButton = ({
       setIndex(0);
       router.replace('/get-started' as Href<'get-started'>);
       return;
+    } else {
+      incrementIndex();
     }
-    incrementIndex();
   }, [incrementIndex, scrollIndex, listContent, setIndex]);
 
   const color = useSharedValue<string>('#000000');

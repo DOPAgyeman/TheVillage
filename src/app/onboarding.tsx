@@ -8,16 +8,16 @@ import { OnboardingScrollList } from '@/components/onboarding/onboarding-scroll-
 import { OnboardingSkipButton } from '@/components/onboarding/onboarding-skip-button';
 import { ScrollBackgroundColor } from '@/components/onboarding/scroll-background-color';
 import { content } from '@/constants/onboarding-content';
-import { useScrollIndex } from '@/core/zustand/use-scroll-index';
+import { useOnboardingScrollIndex } from '@/core/zustand/use-onboarding-scroll-index';
 import { View } from '@/ui';
 
 const Onboarding = () => {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const scrollX = React.useRef(useSharedValue(0)).current;
-  const scrollIndex = useScrollIndex.use.index();
-  const incrementIndex = useScrollIndex.use.incrementIndex();
-  const setIndex = useScrollIndex.use.setIndex();
+  const scrollIndex = useOnboardingScrollIndex.use.index();
+  const incrementIndex = useOnboardingScrollIndex.use.incrementIndex();
+  const setIndex = useOnboardingScrollIndex.use.setIndex();
 
   return (
     <Animated.View className="relative h-full items-center">

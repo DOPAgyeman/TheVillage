@@ -29,7 +29,7 @@ export default function Login() {
       // and redirect the user
       if (signInAttempt.status === 'complete') {
         await setActive({ session: signInAttempt.createdSessionId });
-        router.push('/');
+        router.replace('/');
       } else {
         // If the status is not complete, check why. User may need to
         // complete further steps.
@@ -71,6 +71,7 @@ export default function Login() {
             label=" Sign up"
             textClassName="no-underline text-sm font-semibold text-white dark:text-white"
             className="px-0"
+            onPress={() => router.push('/sign-up')}
           />
         </View>
       </View>

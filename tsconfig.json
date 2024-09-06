@@ -25,6 +25,7 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "src/constants/colors.ts"
+    "src/constants/colors.ts",
+    "src/db/index.ts"
   ]
 }

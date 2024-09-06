@@ -12,6 +12,8 @@ const colors = {
   brown: '#32241C',
   gray: '#E4E3DE',
   darkGray: '#868686',
+  darkRed: '#990017',
+  lightRed: '#CF6679',
 };
 
 export default colors;
