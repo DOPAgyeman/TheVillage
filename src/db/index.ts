@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
+// TODO: Remove sensitive environment variables from here
 import { Env } from '@/core/env';
 
 export const db = createClient(
