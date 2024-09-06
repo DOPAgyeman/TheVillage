@@ -7,6 +7,7 @@ import {
   type VerificationCodeFormProps,
 } from '@/components/email-verification-code';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
+import { insertUserIntoDatabase } from '@/db/queries/insert';
 import { FocusAwareStatusBar } from '@/ui';
 
 export default function EmailVerification() {
@@ -25,15 +26,27 @@ export default function EmailVerification() {
       });
 
       if (completeSignUp.status === 'complete') {
+        console.log(
+          `date1: ${new Date(completeSignUp.unsafeMetadata.birthday as string)}`
+        );
+        await insertUserIntoDatabase({
+          id: completeSignUp.createdUserId || '',
+          first_name: completeSignUp.firstName || '',
+          last_name: completeSignUp.lastName || '',
+          full_name: completeSignUp.firstName + ' ' + completeSignUp.lastName,
+          email: completeSignUp.emailAddress || '',
+          date_of_birth: completeSignUp.unsafeMetadata.birthday as Date,
+          sign_in_methods: 'email',
+        });
         await setActive({ session: completeSignUp.createdSessionId });
         router.replace('/');
       } else {
         console.error(JSON.stringify(completeSignUp, null, 2));
       }
-    } catch (err: any) {
+    } catch (error) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      console.error(`${error}`);
     }
   };
 

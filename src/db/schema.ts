@@ -23,12 +23,12 @@ export const taskPriority = pgEnum('task_priority', ['low', 'medium', 'high']);
 
 export const users = pgTable('users', {
   id: text('id').primaryKey(),
-  firstName: text('first_name').notNull(),
-  lastName: text('last_name').notNull(),
-  fullName: text('full_name').notNull(),
-  dateOfBirth: date('date_of_birth', { mode: 'date' }).notNull(),
+  first_name: text('first_name').notNull(),
+  last_name: text('last_name').notNull(),
+  full_name: text('full_name').notNull(),
+  date_of_birth: date('date_of_birth', { mode: 'string' }).notNull(),
   email: text('email').notNull(),
-  signInMethods: signInMethods('sign_in_methods').notNull(),
+  sign_in_methods: signInMethods('sign_in_methods').notNull(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
