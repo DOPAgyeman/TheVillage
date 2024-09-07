@@ -36,6 +36,9 @@ export const OnboardingScrollList = ({
       scrollEventThrottle={32}
       estimatedItemSize={361}
       initialScrollIndex={scrollIndex}
+      getItemType={(item: OnboardingContent) => {
+        return item.key;
+      }}
       renderItem={({ item }: { item: OnboardingContent }) => {
         return (
           <View className="relative h-2/3 w-screen items-center justify-end">

@@ -33,11 +33,14 @@ function SignUpScrollList({
       horizontal
       showsHorizontalScrollIndicator={false}
       pagingEnabled
-      scrollEnabled={false}
+      scrollEnabled={true}
       keyExtractor={(item: SignUpContent) => item.key}
       scrollEventThrottle={32}
       estimatedItemSize={414}
       initialScrollIndex={scrollIndex}
+      getItemType={(item: SignUpContent) => {
+        return item.name;
+      }}
       renderItem={({ item }: { item: SignUpContent }) => {
         return (
           <View className="h-1/2 w-screen items-start justify-start gap-10 px-7 pt-5">

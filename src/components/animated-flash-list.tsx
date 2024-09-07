@@ -24,6 +24,11 @@ type AnimatedFlashListProps = {
     item: any
   ) => ReactElement<any | string | JSXElementConstructor<any>>;
   estimatedItemSize: number;
+  getItemType: (
+    item: any,
+    index: number,
+    extraData?: any
+  ) => string | number | undefined;
   initialScrollIndex: number;
   scrollEnabled: boolean;
   scrollX: SharedValue<number>;
@@ -79,6 +84,7 @@ const AnimatedFlashList = (props: AnimatedFlashListProps) => {
       estimatedItemSize={props.estimatedItemSize}
       initialScrollIndex={props.scrollIndex}
       renderItem={props.renderItem}
+      getItemType={props.getItemType}
     />
   );
 };
