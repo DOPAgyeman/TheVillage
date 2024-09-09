@@ -1,15 +1,12 @@
 /* eslint-disable max-lines-per-function */
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { Dimensions } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
 import SignUpScrollList from '@/components/signup/signup-scroll-list';
-import colors from '@/constants/colors';
 import { content } from '@/constants/signup-content';
 import { useSignUpUser, useVerifyUser } from '@/core/auth/email-sign-up';
 import type { signUpUserType } from '@/core/auth/schema';
@@ -17,6 +14,7 @@ import { signUpUserSchema } from '@/core/auth/schema';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
 import { useSignUpScrollIndex } from '@/core/zustand/use-signup-scroll-index';
 import { Button, FocusAwareStatusBar, View } from '@/ui';
+import { ChevronLeft } from '@/ui/icons/chevron-left';
 
 export default function SignUp() {
   useSoftKeyboardEffect();
@@ -27,7 +25,6 @@ export default function SignUp() {
   const decrementIndex = useSignUpScrollIndex.use.decrementIndex();
   const setIndex = useSignUpScrollIndex.use.setIndex();
   const router = useRouter();
-  const windowWidth = Dimensions.get('window').width;
 
   const {
     handleSubmit: handleSignUp,
@@ -94,23 +91,9 @@ export default function SignUp() {
   }, [decrementIndex, router, scrollIndex]);
 
   return (
-    <Animated.View className="py-14">
+    <Animated.View className="h-full bg-gray py-14 dark:bg-black">
       <FocusAwareStatusBar />
-      <View>
-        <Button
-          variant="ghost"
-          className="bg-none"
-          style={{ width: windowWidth * 0.175, height: windowWidth * 0.175 }}
-          shouldScaleOnPress={false}
-          onPress={onPressBack}
-        >
-          <FontAwesome6
-            name="chevron-left"
-            color={colors.primary}
-            size={windowWidth * 0.075}
-          />
-        </Button>
-      </View>
+      <ChevronLeft onPress={onPressBack} />
 
       <SignUpScrollList
         scrollX={scrollX}
@@ -119,10 +102,11 @@ export default function SignUp() {
         content={content}
         control={signUpControl}
       />
-      <View className="px-7">
+
+      <View className="px-5">
         <Button
           testID="signup-button"
-          label={'Next'}
+          label={scrollIndex === content.length - 1 ? 'Sign up' : 'Next'}
           onPress={onPress}
           disabled={
             signUpErrors[content[scrollIndex].name] ||

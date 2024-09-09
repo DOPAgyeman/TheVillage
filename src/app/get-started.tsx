@@ -25,7 +25,7 @@ const windowWidth = Dimensions.get('window').width;
 export default function GetStarted() {
   useWarmUpBrowser();
   return (
-    <View className="h-full w-screen items-center justify-end gap-28 bg-lightCream dark:bg-black">
+    <View className="h-full w-screen items-center justify-end gap-28 bg-gray dark:bg-black">
       <View className="items-center gap-5">
         <Image
           source={require('/assets/icon.png')}

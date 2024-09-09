@@ -20,7 +20,7 @@ export const content: SignUpContent[] = [
   {
     key: '8476382',
     name: 'first_name',
-    title: 'What is your first name?',
+    title: "What's your first name?",
     description:
       'Welcome to the Village! Please start by entering your first name',
     label: 'First name',
@@ -29,7 +29,7 @@ export const content: SignUpContent[] = [
   {
     key: '8473249',
     name: 'last_name',
-    title: 'What is your last name?',
+    title: "What's your last name?",
     description:
       'Please enter your last name so that we can easily identify you.',
     label: 'Last name',
@@ -38,16 +38,16 @@ export const content: SignUpContent[] = [
   {
     key: '8476264',
     name: 'date_of_birth',
-    title: 'What is your date of birth?',
+    title: "What's your date of birth?",
     description:
-      'Please enter your date of birth. You must be at least 18 years old to use the app.',
+      'Please enter your date of birth. You must be at least 18 years old to use this app.',
     label: 'Date of birth',
     image: require('/assets/welcome/pregnancy.png'),
   },
   {
     key: '8475482',
     name: 'email',
-    title: 'What is your email address?',
+    title: "What's your email address?",
     description:
       'Please enter the email address at which you can be contacted.',
     label: 'Email address',

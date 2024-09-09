@@ -20,6 +20,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { tv } from 'tailwind-variants';
 
+import { useThemeConfig } from '@/core/use-theme-config';
 import { useBooleanHandler } from '@/core/zustand/use-boolean-handler';
 
 import colors from '../constants/colors';
@@ -30,7 +31,7 @@ export const inputTv = tv({
     container: 'justify-center',
     label: 'absolute px-4 text-lg text-darkGray dark:text-darkGray',
     input:
-      'w-full rounded-xl border border-gray px-4 pb-4 pt-8 text-base text-black placeholder-white focus:border-primary focus:ring-gray dark:border-lightBlack dark:text-white  dark:placeholder-white dark:focus:border-primary dark:focus:ring-primary',
+      'w-full rounded-xl border border-darkGray px-4 pb-4 pt-8 text-base text-black placeholder-white focus:border-primary focus:ring-gray dark:border-lightBlack dark:text-white  dark:placeholder-white dark:focus:border-secondaryGreen dark:focus:ring-secondaryGreen',
   },
 
   variants: {
@@ -129,6 +130,8 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
     };
   });
 
+  const theme = useThemeConfig();
+
   return (
     <View className="relative gap-4">
       <View className={styles.container()}>
@@ -145,7 +148,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
           testID={testID}
           ref={ref}
           placeholderTextColor={colors.black}
-          selectionColor={colors.primary}
+          selectionColor={theme.dark ? colors.secondaryGreen : colors.primary}
           className={styles.input()}
           onBlur={onBlur}
           onFocus={onFocus}
@@ -156,14 +159,13 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
           ])}
         />
       </View>
-      {error && (
-        <Text
-          testID={testID ? `${testID}-error` : undefined}
-          className="text-sm text-darkRed dark:text-lightRed"
-        >
-          {error}
-        </Text>
-      )}
+
+      <Text
+        testID={testID ? `${testID}-error` : undefined}
+        className="text-sm text-darkRed dark:text-lightRed"
+      >
+        {error}
+      </Text>
     </View>
   );
 });
@@ -174,7 +176,6 @@ export function ControlledInput<T extends FieldValues>(
 ) {
   const { name, control, rules, ...inputProps } = props;
   const { field, fieldState } = useController({ control, name, rules });
-  console.log(field.name, field.value);
   return (
     <Input
       ref={field.ref}

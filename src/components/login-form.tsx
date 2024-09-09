@@ -11,6 +11,7 @@ const schema = z.object({
     .string({
       required_error: 'Email is required',
     })
+    .min(1, { message: 'Please enter your email address' })
     .email('Invalid email format'),
   password: z
     .string({
@@ -28,15 +29,16 @@ export type LoginFormProps = {
 export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
   const { handleSubmit, control } = useForm<FormType>({
     resolver: zodResolver(schema),
+    mode: 'all',
   });
 
   return (
-    <View className="flex w-full flex-col gap-5">
+    <View className="flex w-full flex-col gap-4">
       <View>
-        <Text className="self-start pt-5 text-5xl font-semibold text-white dark:text-white">
+        <Text className="self-start pt-5 text-5xl font-semibold text-black dark:text-white">
           Log in
         </Text>
-        <Text className="w-3/4 self-start text-start text-sm font-medium text-white dark:text-white">
+        <Text className="w-3/4 self-start text-start text-sm font-medium text-black dark:text-white">
           Continue where you left off and show love to your Village
         </Text>
       </View>
@@ -64,17 +66,17 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
         className="my-0 h-fit py-0"
         label="Forgot your password?"
         variant="ghost"
-        textClassName="no-underline font-normal text-white"
+        textClassName="no-underline font-normal text-black dark:text-white"
       />
       <View className="flex w-full flex-row items-center justify-center gap-2 px-5">
-        <View className="h-px flex-1 bg-white  opacity-20" />
-        <Text className="text-base color-darkGray">or</Text>
-        <View className="h-px flex-1 bg-white opacity-20" />
+        <View className="h-px flex-1 bg-black  opacity-20" />
+        <Text className="text-base color-black">or</Text>
+        <View className="h-px flex-1 bg-black opacity-20" />
       </View>
       <View className="flex w-full flex-row items-center justify-center gap-5 px-5">
-        <Button label="" variant="default" className="bg-white" size="icon" />
-        <Button label="" variant="default" className="bg-white" size="icon" />
-        <Button label="" variant="default" className="bg-white" size="icon" />
+        <Button label="" variant="default" className="bg-black" size="icon" />
+        <Button label="" variant="default" className="bg-black" size="icon" />
+        <Button label="" variant="default" className="bg-black" size="icon" />
       </View>
     </View>
   );
