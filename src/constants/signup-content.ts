@@ -7,7 +7,8 @@ export type SignUpContent = {
     | 'full_name'
     | 'date_of_birth'
     | 'email'
-    | 'sign_in_methods'
+    | 'external_accounts'
+    | 'image_url'
     | 'password'
     | 'code';
   title: string;

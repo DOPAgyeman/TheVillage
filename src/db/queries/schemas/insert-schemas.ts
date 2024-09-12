@@ -3,7 +3,6 @@ import moment from 'moment';
 import { z } from 'zod';
 
 import { users } from '@/db/schema';
-import { signInMethods } from '@/db/schema';
 
 const calculateMinAge = moment().subtract(18, 'years').toDate();
 console.log(calculateMinAge);
@@ -32,8 +31,8 @@ export const insertUserSchema = createInsertSchema(users, {
     })
     .min(1, { message: 'Please enter your email address' })
     .email({ message: 'Please provide a valid email address' }),
-
-  sign_in_methods: z.enum(signInMethods.enumValues).default('email'),
+  external_accounts: z.array(z.string()).default([]),
+  image_url: z.string().default(''),
 });
 
 export type insertUserType = z.infer<typeof insertUserSchema>;

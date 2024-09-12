@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import {
   boolean,
   date,
@@ -12,23 +12,19 @@ import {
   timestamp,
 } from 'drizzle-orm/pg-core';
 
-export const signInMethods = pgEnum('sign_in_methods', [
-  'email',
-  'google',
-  'facebook',
-  'apple',
-]);
-
 export const taskPriority = pgEnum('task_priority', ['low', 'medium', 'high']);
 
 export const users = pgTable('users', {
-  id: text('id').primaryKey(),
+  id: text('id')
+    .primaryKey()
+    .default(sql`(requesting_id())`),
   first_name: text('first_name').notNull(),
   last_name: text('last_name').notNull(),
   full_name: text('full_name').notNull(),
   date_of_birth: date('date_of_birth', { mode: 'string' }).notNull(),
-  email: text('email').notNull(),
-  sign_in_methods: signInMethods('sign_in_methods').notNull(),
+  email: text('email_address').notNull(),
+  external_accounts: text('external_accounts').array().default([]),
+  image_url: text('image_url'),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

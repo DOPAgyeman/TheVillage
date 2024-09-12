@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import { isClerkAPIResponseError } from '@clerk/clerk-expo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import React, { useCallback } from 'react';
@@ -45,8 +46,8 @@ export default function SignUp() {
     },
   });
 
-  const signUpUser = useSignUpUser(incrementIndex);
-  const verifyUser = useVerifyUser(setIndex);
+  const signUpUser = useSignUpUser();
+  const verifyUser = useVerifyUser();
 
   const onPress = useCallback(async () => {
     if (scrollIndex === content.length - 1) {
@@ -59,20 +60,30 @@ export default function SignUp() {
       } else {
         try {
           await handleSignUp(verifyUser)();
+
+          router.replace('/');
+          setIndex(0);
         } catch (error) {
-          console.error(JSON.stringify(error, null, 2));
+          console.log(JSON.stringify(error, null, 2));
         }
       }
     } else if (scrollIndex === content.length - 2) {
       try {
         await handleSignUp(signUpUser)();
+        incrementIndex();
       } catch (error) {
-        console.error(JSON.stringify(error, null, 2));
+        if (isClerkAPIResponseError(error)) {
+          const testerr = error.errors;
+          console.log(JSON.stringify(testerr, null, 2));
+        } else {
+          console.log(error);
+        }
       }
     } else {
       incrementIndex();
     }
   }, [
+    setIndex,
     getValues,
     handleSignUp,
     incrementIndex,
@@ -80,6 +91,8 @@ export default function SignUp() {
     scrollIndex,
     setError,
     signUpUser,
+
+    router,
   ]);
 
   const onPressBack = useCallback(() => {

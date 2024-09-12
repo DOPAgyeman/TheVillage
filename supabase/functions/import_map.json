@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "zod": "https://deno.land/x/zod/mod.ts",
+    "svix": "https://cdn.skypack.dev/svix",
+    "supabase": "jsr:@supabase/supabase-js@2"
+  }
+}

@@ -79,8 +79,8 @@ const client = z.object({
 
   // ADD YOUR CLIENT ENV VARS HERE
   EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
-  SUPABASE_API_URL: z.string(),
-  SUPABASE_SERVICE_KEY: z.string(),
+  SUPABASE_URL: z.string(),
+  SUPABASE_KEY: z.string(),
   DATABASE_URL: z.string(),
   API_URL: z.string(),
   VAR_NUMBER: z.number(),
@@ -112,8 +112,8 @@ const _clientEnv = {
   EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY:
     process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY,
   DATABASE_URL: process.env.DATABASE_URL,
-  SUPABASE_API_URL: process.env.SUPABASE_API_URL,
-  SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY,
+  SUPABASE_URL: process.env.SUPABASE_URL,
+  SUPABASE_KEY: process.env.SUPABASE_KEY,
 };
 
 /**
