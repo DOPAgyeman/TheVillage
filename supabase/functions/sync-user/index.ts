@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-// @ts-nocheck
+
 import { createClient } from 'supabase';
 import { Webhook } from 'svix';
 
@@ -27,7 +27,7 @@ Deno.serve(async (req: Request) => {
       'svix-timestamp': svix_timestamp,
       'svix-signature': svix_signature,
     });
-  } catch (err) {
+  } catch (_err) {
     return new Response('Unauthorized: Invalid headers used', { status: 401 });
   }
 
@@ -44,11 +44,11 @@ Deno.serve(async (req: Request) => {
     const primaryEmailId = parsedRequest.data.primary_email_address_id;
     const email_address =
       parsedRequest.data.email_addresses.find(
-        (email) => email.id === primaryEmailId
+        (email: { id: string }) => email.id === primaryEmailId
       )?.email_address || '';
 
     const verifiedExternalAccounts = parsedRequest.data.external_accounts.map(
-      (e) => {
+      (e: { verification_status: string; provider: string }) => {
         if (e.verification_status === 'verified') {
           return e.provider;
         }
@@ -98,12 +98,12 @@ Deno.serve(async (req: Request) => {
           status: 400,
         });
       }
-
-      return new Response('Successfully created user', {
-        status: 200,
-      });
     }
   } catch (err) {
     return new Response(JSON.stringify(err, null, 2), { status: 500 });
   }
+
+  return new Response('Successfully created user', {
+    status: 200,
+  });
 });
