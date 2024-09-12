@@ -1,6 +1,6 @@
 {
   "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
   "[javascript][typescript][typescriptreact]": {
@@ -15,9 +15,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  "[typescript]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
-  },
+  "[typescript]": {},
   "cSpell.words": ["Flashlist", "Lato", "Pressable", "signup"],
   "deno.enablePaths": ["supabase/functions"],
   "deno.lint": true,
@@ -36,5 +34,7 @@
   "tailwindCSS.experimental.classRegex": [
     ["tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "deno.enable": true,
+  "deno.importMap": "supabase/functions/import_map.json"
 }

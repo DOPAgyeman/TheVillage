@@ -4,6 +4,7 @@ import '../../global.css';
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from '@clerk/clerk-expo';
 import { useReactNavigationDevTools } from '@dev-plugins/react-navigation';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -51,7 +52,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const navigationRef = useNavigationContainerRef();
   useReactNavigationDevTools(navigationRef);
-  useFonts(FontAwesome.font);
+  useFonts({ FontAwesome: FontAwesome.font, FontAwesome6: FontAwesome6.font });
   return <RootLayoutNav />;
 }
 
@@ -64,10 +65,6 @@ function RootLayoutNav() {
         <Stack.Screen name="get-started" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="sign-up" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="email-verification"
-          options={{ headerShown: false }}
-        />
       </Stack>
     </Providers>
   );

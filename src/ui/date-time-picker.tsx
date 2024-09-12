@@ -1,11 +1,12 @@
 import * as React from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
-import { View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
+import colors from '@/constants/colors';
+import { useThemeConfig } from '@/core/use-theme-config';
 import { useDateTimePickerHandler } from '@/core/zustand/use-datetimepicker-handler';
-import { Input } from '@/ui';
+import { Input, View } from '@/ui';
 
 type DateTimePickerProps<T extends FieldValues> = {
   control: Control<T>;
@@ -25,6 +26,7 @@ export function DateTimePicker<T extends FieldValues>(
   const { field, fieldState } = useController({ control, name });
   const isVisible = useDateTimePickerHandler.use.boolean();
   const toggleIsVisible = useDateTimePickerHandler.use.toggleBoolean();
+  const theme = useThemeConfig();
 
   return (
     <View>
@@ -54,6 +56,10 @@ export function DateTimePicker<T extends FieldValues>(
         }}
         onCancel={toggleIsVisible}
         ref={field.ref}
+        buttonTextColorIOS={theme.dark ? colors.secondaryGreen : colors.primary}
+        display="inline"
+        textColor={theme.dark ? colors.secondaryGreen : colors.primary}
+        accentColor={theme.dark ? colors.secondaryGreen : colors.primary}
       />
     </View>
   );

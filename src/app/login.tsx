@@ -5,9 +5,8 @@ import { Dimensions } from 'react-native';
 
 import type { LoginFormProps } from '@/components/login-form';
 import { LoginForm } from '@/components/login-form';
-import Colors from '@/constants/colors';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
-import { Button, Image, SafeAreaView, Text, View } from '@/ui';
+import { Button, Image, Text, View } from '@/ui';
 
 export default function Login() {
   const router = useRouter();
@@ -43,10 +42,7 @@ export default function Login() {
   };
   const windowWidth = Dimensions.get('window').width;
   return (
-    <SafeAreaView
-      className="relative w-screen bg-black dark:bg-black"
-      style={{ backgroundColor: Colors.black }}
-    >
+    <View className="relative w-screen  bg-lightCream pt-20 dark:bg-black">
       <View className="flex h-full w-screen flex-col justify-center gap-5 px-5">
         <View className="absolute top-2 self-center">
           <Image
@@ -56,6 +52,7 @@ export default function Login() {
               height: windowWidth / 6,
             }}
             contentFit="contain"
+            className="rounded-full"
           />
         </View>
 
@@ -63,18 +60,18 @@ export default function Login() {
       </View>
       <View className="absolute inset-x-0 bottom-8">
         <View className="flex flex-row items-center justify-center gap-0">
-          <Text className="text-sm text-white dark:text-white">
+          <Text className="text-sm text-black dark:text-white">
             Don't have an account?{' '}
           </Text>
           <Button
             variant="ghost"
             label=" Sign up"
-            textClassName="no-underline text-sm font-semibold text-white dark:text-white"
+            textClassName="no-underline text-sm font-semibold text-black dark:text-white"
             className="px-0"
             onPress={() => router.push('/sign-up')}
           />
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

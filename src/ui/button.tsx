@@ -29,9 +29,9 @@ const button = tv({
   variants: {
     variant: {
       default: {
-        container: 'bg-primary dark:bg-lightCream',
-        label: 'text-lg text-white dark:text-black',
-        indicator: 'text-white dark:text-black',
+        container: 'bg-primary dark:bg-secondaryGreen',
+        label: 'text-lg text-white dark:text-lightCream',
+        indicator: 'text-white dark:text-lightCream',
       },
       secondary: {
         container: 'bg-black',
@@ -61,7 +61,7 @@ const button = tv({
       iconAndText: {
         container: 'bg-transparent',
         label: 'text-black underline dark:text-white',
-        indicator: 'text-white dark:text-black',
+        indicator: 'text-white dark:text-lightCream',
       },
     },
     size: {
@@ -82,9 +82,9 @@ const button = tv({
     },
     disabled: {
       true: {
-        container: 'bg-gray dark:bg-gray',
-        label: 'text-black dark:text-lightCream',
-        indicator: 'text-gray dark:text-lightCream',
+        container: 'bg-lightGray dark:bg-lightBlack',
+        label: 'text-darkGray dark:text-darkGray',
+        indicator: 'text-darkGray dark:text-lightGray',
       },
     },
     fullWidth: {
@@ -114,6 +114,7 @@ interface Props extends ButtonVariants, Omit<PressableProps, 'disabled'> {
   animateTextStyle?: [ViewStyle] | StyleProp<any>;
   animateIconStyle?: [ViewStyle] | StyleProp<any>;
   icon?: ReactNode;
+  shouldScaleOnPress?: boolean;
 }
 
 export const Button = React.forwardRef<View, Props>(
@@ -131,6 +132,7 @@ export const Button = React.forwardRef<View, Props>(
       animateIconStyle,
       icon,
       textClassName = 'text-lg',
+      shouldScaleOnPress = true,
       ...props
     },
     ref
@@ -166,16 +168,17 @@ export const Button = React.forwardRef<View, Props>(
             easing: Easing.elastic(0),
             reduceMotion: ReduceMotion.System,
           });
-
-          buttonScale.value = withSpring(0.96, {
-            duration: 200,
-            dampingRatio: 0.7,
-            stiffness: 254,
-            overshootClamping: false,
-            restDisplacementThreshold: 42.22,
-            restSpeedThreshold: 0.01,
-            reduceMotion: ReduceMotion.System,
-          });
+          if (shouldScaleOnPress) {
+            buttonScale.value = withSpring(0.96, {
+              duration: 200,
+              dampingRatio: 0.7,
+              stiffness: 254,
+              overshootClamping: false,
+              restDisplacementThreshold: 42.22,
+              restSpeedThreshold: 0.01,
+              reduceMotion: ReduceMotion.System,
+            });
+          }
         } else if (pressed === false) {
           cancelAnimation(buttonOpacity);
           cancelAnimation(buttonScale);
@@ -184,15 +187,17 @@ export const Button = React.forwardRef<View, Props>(
             easing: Easing.elastic(0),
             reduceMotion: ReduceMotion.System,
           });
-          buttonScale.value = withSpring(1, {
-            duration: 200,
-            dampingRatio: 0.7,
-            stiffness: 254,
-            overshootClamping: false,
-            restDisplacementThreshold: 42.22,
-            restSpeedThreshold: 0.01,
-            reduceMotion: ReduceMotion.System,
-          });
+          if (shouldScaleOnPress) {
+            buttonScale.value = withSpring(1, {
+              duration: 200,
+              dampingRatio: 0.7,
+              stiffness: 254,
+              overshootClamping: false,
+              restDisplacementThreshold: 42.22,
+              restSpeedThreshold: 0.01,
+              reduceMotion: ReduceMotion.System,
+            });
+          }
         }
       }
     );

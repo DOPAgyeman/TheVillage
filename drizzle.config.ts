@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import { defineConfig } from 'drizzle-kit';
 
+// TODO: Remove sensitive environment variables from here
 import { Env } from './env';
 
 config({ path: '.env' });

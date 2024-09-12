@@ -22,7 +22,8 @@
     "env.js",
     ".env.development",
     ".env.production",
-    ".env.staging"
+    ".env.staging",
+    "supabase/functions/create-user/index.ts"
   ],
   "include": [
     "**/*.ts",

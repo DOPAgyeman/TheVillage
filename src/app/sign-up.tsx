@@ -1,8 +1,11 @@
 /* eslint-disable max-lines-per-function */
+import { isClerkAPIResponseError } from '@clerk/clerk-expo';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'expo-router';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSharedValue } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import SignUpScrollList from '@/components/signup/signup-scroll-list';
 import { content } from '@/constants/signup-content';
@@ -11,7 +14,8 @@ import type { signUpUserType } from '@/core/auth/schema';
 import { signUpUserSchema } from '@/core/auth/schema';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
 import { useSignUpScrollIndex } from '@/core/zustand/use-signup-scroll-index';
-import { Button, FocusAwareStatusBar, SafeAreaView, View } from '@/ui';
+import { Button, FocusAwareStatusBar, View } from '@/ui';
+import { ChevronLeft } from '@/ui/icons/chevron-left';
 
 export default function SignUp() {
   useSoftKeyboardEffect();
@@ -19,7 +23,9 @@ export default function SignUp() {
   const scrollX = React.useRef(useSharedValue(0)).current;
   const scrollIndex = useSignUpScrollIndex.use.index();
   const incrementIndex = useSignUpScrollIndex.use.incrementIndex();
+  const decrementIndex = useSignUpScrollIndex.use.decrementIndex();
   const setIndex = useSignUpScrollIndex.use.setIndex();
+  const router = useRouter();
 
   const {
     handleSubmit: handleSignUp,
@@ -40,8 +46,8 @@ export default function SignUp() {
     },
   });
 
-  const signUpUser = useSignUpUser(incrementIndex);
-  const verifyUser = useVerifyUser(setIndex);
+  const signUpUser = useSignUpUser();
+  const verifyUser = useVerifyUser();
 
   const onPress = useCallback(async () => {
     if (scrollIndex === content.length - 1) {
@@ -54,20 +60,30 @@ export default function SignUp() {
       } else {
         try {
           await handleSignUp(verifyUser)();
+
+          router.replace('/');
+          setIndex(0);
         } catch (error) {
-          console.error(JSON.stringify(error, null, 2));
+          console.log(JSON.stringify(error, null, 2));
         }
       }
     } else if (scrollIndex === content.length - 2) {
       try {
         await handleSignUp(signUpUser)();
+        incrementIndex();
       } catch (error) {
-        console.error(JSON.stringify(error, null, 2));
+        if (isClerkAPIResponseError(error)) {
+          const testerr = error.errors;
+          console.log(JSON.stringify(testerr, null, 2));
+        } else {
+          console.log(error);
+        }
       }
     } else {
       incrementIndex();
     }
   }, [
+    setIndex,
     getValues,
     handleSignUp,
     incrementIndex,
@@ -75,11 +91,23 @@ export default function SignUp() {
     scrollIndex,
     setError,
     signUpUser,
+
+    router,
   ]);
 
+  const onPressBack = useCallback(() => {
+    if (scrollIndex === 0) {
+      router.back();
+    } else {
+      decrementIndex();
+    }
+  }, [decrementIndex, router, scrollIndex]);
+
   return (
-    <SafeAreaView>
+    <Animated.View className="h-full bg-gray py-14 dark:bg-black">
       <FocusAwareStatusBar />
+      <ChevronLeft onPress={onPressBack} />
+
       <SignUpScrollList
         scrollX={scrollX}
         scrollIndex={scrollIndex}
@@ -87,10 +115,11 @@ export default function SignUp() {
         content={content}
         control={signUpControl}
       />
-      <View className="px-7 pt-16">
+
+      <View className="px-5">
         <Button
           testID="signup-button"
-          label={'Next'}
+          label={scrollIndex === content.length - 1 ? 'Sign up' : 'Next'}
           onPress={onPress}
           disabled={
             signUpErrors[content[scrollIndex].name] ||
@@ -100,6 +129,6 @@ export default function SignUp() {
           }
         />
       </View>
-    </SafeAreaView>
+    </Animated.View>
   );
 }
