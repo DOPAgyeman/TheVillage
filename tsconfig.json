@@ -22,8 +22,7 @@
     "env.js",
     ".env.development",
     ".env.production",
-    ".env.staging",
-    "supabase/functions/create-user/index.ts"
+    ".env.staging"
   ],
   "include": [
     "**/*.ts",
@@ -31,6 +30,9 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "src/constants/colors.ts",
-    "src/db/index.ts"
+    "src/db/index.ts",
+    "supabase/functions/create-user/index.ts",
+    "supabase/functions/update-user/index.ts",
+    "supabase/functions/delete-user/index.ts"
   ]
 }

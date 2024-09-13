@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 import { users } from '@/db/schema';
 
-const calculateMinAge = moment().subtract(18, 'years').toDate();
+const calculateMinAge = moment().subtract(13, 'years').toDate();
 console.log(calculateMinAge);
 
 export const insertUserSchema = createInsertSchema(users, {
@@ -24,7 +24,7 @@ export const insertUserSchema = createInsertSchema(users, {
     .date({
       required_error: 'Please enter your date of birth',
     })
-    .max(calculateMinAge, { message: 'You must be at least 18 years old' }),
+    .max(calculateMinAge, { message: 'You must be at least 13 years old' }),
   email: z
     .string({
       required_error: 'Please enter your email address',

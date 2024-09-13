@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useAuth } from '@clerk/clerk-expo';
+import { useUser } from '@clerk/clerk-expo';
 import { Link, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { Pressable, Text } from '@/ui';
+import { Button, Pressable, Text } from '@/ui';
 import {
   Feed as FeedIcon,
   Settings as SettingsIcon,
@@ -63,6 +64,11 @@ export default function TabLayout() {
 }
 
 const CreateNewPostLink = () => {
+  const { user } = useUser();
+  const onPress = async () => {
+    if (!user) return null;
+    await user.delete();
+  };
   return (
     <>
       <Link href="/feed/add-post" asChild>
@@ -70,6 +76,7 @@ const CreateNewPostLink = () => {
           <Text className="text-primary-300 px-3">Create</Text>
         </Pressable>
       </Link>
+      <Button label="delete" onPress={onPress} />
     </>
   );
 };
