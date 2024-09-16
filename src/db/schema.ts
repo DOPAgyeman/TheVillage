@@ -22,7 +22,7 @@ export const users = pgTable('users', {
   last_name: text('last_name').notNull(),
   full_name: text('full_name').notNull(),
   date_of_birth: date('date_of_birth', { mode: 'string' }),
-  email: text('email_address').notNull(),
+  email_address: text('email_address').notNull(),
   external_accounts: text('external_accounts').array().default([]),
   image_url: text('image_url'),
 });

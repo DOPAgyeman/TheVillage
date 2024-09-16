@@ -25,7 +25,7 @@ export const insertUserSchema = createInsertSchema(users, {
       required_error: 'Please enter your date of birth',
     })
     .max(calculateMinAge, { message: 'You must be at least 13 years old' }),
-  email: z
+  email_address: z
     .string({
       required_error: 'Please enter your email address',
     })

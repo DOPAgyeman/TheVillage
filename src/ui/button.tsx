@@ -39,7 +39,7 @@ const button = tv({
         indicator: 'text-white',
       },
       outline: {
-        container: 'border-darkGreen border',
+        container: 'border border-lightGray dark:border-lightBlack',
         label: 'text-black dark:text-white',
         indicator: 'text-black dark:text-white',
       },

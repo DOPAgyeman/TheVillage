@@ -29,11 +29,18 @@ type AnimatedFlashListProps = {
     index: number,
     extraData?: any
   ) => string | number | undefined;
+  keyboardShouldPersistTaps?:
+    | boolean
+    | 'always'
+    | 'never'
+    | 'handled'
+    | undefined;
   initialScrollIndex: number;
   scrollEnabled: boolean;
   scrollX: SharedValue<number>;
   scrollIndex: number;
   setIndex: (index: number) => void;
+  onScrollEnd?: () => void;
 };
 
 const AnimatedFlashListComponent = Animated.createAnimatedComponent(
@@ -75,6 +82,9 @@ const AnimatedFlashList = (props: AnimatedFlashListProps) => {
             ) {
               runOnJS(props.setIndex)(i);
             }
+            if (props.onScrollEnd) {
+              runOnJS(props.onScrollEnd)();
+            }
           });
         },
       })}
@@ -85,6 +95,7 @@ const AnimatedFlashList = (props: AnimatedFlashListProps) => {
       initialScrollIndex={props.scrollIndex}
       renderItem={props.renderItem}
       getItemType={props.getItemType}
+      keyboardShouldPersistTaps={props.keyboardShouldPersistTaps}
     />
   );
 };

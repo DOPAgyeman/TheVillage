@@ -6,7 +6,7 @@ export type SignUpContent = {
     | 'last_name'
     | 'full_name'
     | 'date_of_birth'
-    | 'email'
+    | 'email_address'
     | 'external_accounts'
     | 'image_url'
     | 'password'
@@ -41,13 +41,13 @@ export const content: SignUpContent[] = [
     name: 'date_of_birth',
     title: "What's your date of birth?",
     description:
-      'Please enter your date of birth. You must be at least 18 years old to use this app.',
+      'Please enter your date of birth. You must be at least 13 years old to use this app.',
     label: 'Date of birth',
     image: require('/assets/welcome/pregnancy.png'),
   },
   {
     key: '8475482',
-    name: 'email',
+    name: 'email_address',
     title: "What's your email address?",
     description:
       'Please enter the email address at which you can be contacted.',
@@ -59,7 +59,7 @@ export const content: SignUpContent[] = [
     name: 'password',
     title: 'Create a password',
     description:
-      'Your password must be at least 8 characters and contain a combination of letters, numbers and special characters',
+      'Your password must be at least 8 characters and contain one lowercase letter, one uppercase letter, one number, and one special character.',
     label: 'Password',
     image: require('/assets/welcome/pregnancy.png'),
   },

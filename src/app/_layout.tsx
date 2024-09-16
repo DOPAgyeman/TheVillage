@@ -5,6 +5,7 @@ import { ClerkLoaded, ClerkLoading, ClerkProvider } from '@clerk/clerk-expo';
 import { useReactNavigationDevTools } from '@dev-plugins/react-navigation';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -52,7 +53,11 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const navigationRef = useNavigationContainerRef();
   useReactNavigationDevTools(navigationRef);
-  useFonts({ FontAwesome: FontAwesome.font, FontAwesome6: FontAwesome6.font });
+  useFonts({
+    FontAwesome: FontAwesome.font,
+    FontAwesome6: FontAwesome6.font,
+    Ionicons: Ionicons.font,
+  });
   return <RootLayoutNav />;
 }
 
