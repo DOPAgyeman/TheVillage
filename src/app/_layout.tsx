@@ -17,6 +17,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { APIProvider } from '@/api';
 import { hydrateAuth, loadSelectedTheme } from '@/core';
+import { NetworkInfo } from '@/core/network-info';
 import { useThemeConfig } from '@/core/use-theme-config';
 import { View } from '@/ui';
 
@@ -99,7 +100,9 @@ function Providers({ children }: { children: React.ReactNode }) {
               </ClerkLoading>
               <ClerkLoaded>{children}</ClerkLoaded>
             </ClerkProvider>
+
             <FlashMessage position="top" />
+            <NetworkInfo />
           </BottomSheetModalProvider>
         </APIProvider>
       </ThemeProvider>
