@@ -67,7 +67,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           kotlinVersion: '1.7.22', // this is for softinput package
         },
         ios: {
-          deploymentTarget: '13.4',
+          deploymentTarget: '14.0',
         },
       },
     ],

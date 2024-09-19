@@ -23,9 +23,7 @@ export const NetworkConnectionModal = React.forwardRef<BottomSheetModal>(
           backgroundColor: isDark ? colors.lightBlack : colors.white,
         }}
       >
-        <Rive
-          resourceName="wifi_animation_dark" // weather_app.riv
-        />
+        <Rive resourceName="wifi_animation_dark" />
       </Modal>
     );
   }
