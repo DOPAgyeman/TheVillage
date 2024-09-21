@@ -11,16 +11,19 @@ type handleClerkErrorProps = {
   fieldName?: string;
   shouldFocus?: boolean;
   hideFlashMessage?: boolean;
+  backgroundColor: string;
 };
 
 export const handleClerkError = (options: handleClerkErrorProps) => {
   if (!options.hideFlashMessage) {
-    showErrorMessage(
-      options.error.message,
-      options.error.longMessage === options.error.message
-        ? ''
-        : options.error.longMessage
-    );
+    showErrorMessage({
+      message: options.error.message,
+      description:
+        options.error.longMessage === options.error.message
+          ? ''
+          : options.error.longMessage,
+      backgroundColor: options.backgroundColor,
+    });
   }
   if (options.content) {
     let findFieldWithError = options.content.find(

@@ -27,12 +27,12 @@ export default function AddPost() {
       { ...data, userId: 1 },
       {
         onSuccess: () => {
-          showInfoMessage('Post added successfully');
+          showInfoMessage({ message: 'Post added successfully' });
           // here you can navigate to the post list and refresh the list data
           //queryClient.invalidateQueries(usePosts.getKey());
         },
         onError: () => {
-          showErrorMessage('Error adding post');
+          showErrorMessage({ message: 'Error adding post' });
         },
       }
     );

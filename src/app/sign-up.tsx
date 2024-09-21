@@ -10,6 +10,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
 import SignUpScrollList from '@/components/signup/signup-scroll-list';
+import colors from '@/constants/colors';
 import { content } from '@/constants/signup-content';
 import { useSignUpUser, useVerifyUser } from '@/core/auth/email-sign-up';
 import { handleClerkError } from '@/core/auth/errors';
@@ -87,9 +88,13 @@ export default function SignUp() {
               fieldName: 'code',
               shouldFocus: false,
               hideFlashMessage: true,
+              backgroundColor: colors.darkRed,
             });
           } else {
-            showErrorMessage('An error has occurred. Please try again later.');
+            showErrorMessage({
+              message: 'An error has occurred. Please try again later.',
+              backgroundColor: colors.darkRed,
+            });
           }
         }
       }
@@ -107,9 +112,13 @@ export default function SignUp() {
             setIndex: setIndex,
             setError: setError,
             content: content,
+            backgroundColor: colors.darkRed,
           });
         } else {
-          showErrorMessage('An error has occurred. Please try again later.');
+          showErrorMessage({
+            message: 'An error has occurred. Please try again later.',
+            backgroundColor: colors.darkRed,
+          });
         }
       }
     } else {
@@ -157,7 +166,10 @@ export default function SignUp() {
       if (Keyboard.isVisible()) {
         Keyboard.dismiss();
       }
-      showSuccessMessage('Verification code sent successfully');
+      showSuccessMessage({
+        message: 'Verification code sent successfully',
+        backgroundColor: colors.secondaryGreen,
+      });
     } catch (error) {
       if (isClerkAPIResponseError(error)) {
         handleClerkError({
@@ -165,9 +177,13 @@ export default function SignUp() {
           setIndex: setIndex,
           setError: setError,
           content: content,
+          backgroundColor: colors.darkRed,
         });
       } else {
-        showErrorMessage('An error has occurred. Please try again later.');
+        showErrorMessage({
+          message: 'An error has occurred. Please try again later.',
+          backgroundColor: colors.darkRed,
+        });
       }
     }
   }, [handleSignUp, signUpUser, setError, setIndex]);

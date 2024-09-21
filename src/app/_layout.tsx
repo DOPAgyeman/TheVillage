@@ -101,7 +101,7 @@ function Providers({ children }: { children: React.ReactNode }) {
               <ClerkLoaded>{children}</ClerkLoaded>
             </ClerkProvider>
 
-            <FlashMessage position="top" />
+            <FlashMessage />
             <NetworkInfo />
           </BottomSheetModalProvider>
         </APIProvider>

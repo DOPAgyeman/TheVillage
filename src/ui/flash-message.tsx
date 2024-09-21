@@ -1,60 +1,130 @@
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
+import Rive, { Fit } from 'rive-react-native';
 
-import colors from '@/constants/colors';
+import Colors from '@/constants/colors';
+import { View } from '@/ui';
 
-export const showSuccessMessage = (message: string, description?: string) => {
+type flashMessageProps = {
+  message: string;
+  description?: string;
+  backgroundColor?: string;
+};
+
+export const showSuccessMessage = (options: flashMessageProps) => {
   showMessage({
-    message: message,
+    message: options.message,
     type: 'success',
-    description: description,
-    style: styles.successContainer,
+    description: options.description,
+    style: [
+      styles.successContainer,
+      { backgroundColor: options.backgroundColor },
+    ],
     floating: true,
     textStyle: styles.description,
     titleStyle: styles.title,
     icon: { icon: 'success', position: 'left', props: {} },
+    position: 'top',
   });
 };
 
-export const showErrorMessage = (message: string, description?: string) => {
+export const showErrorMessage = (options: flashMessageProps) => {
   showMessage({
-    message: message,
+    message: options.message,
     type: 'danger',
-    description: description,
-    style: styles.errorContainer,
+    description: options.description,
+    style: [
+      styles.errorContainer,
+      { backgroundColor: options.backgroundColor },
+    ],
     floating: true,
     textStyle: styles.description,
     titleStyle: styles.title,
     icon: { icon: 'danger', position: 'left', props: {} },
+    position: 'top',
   });
 };
 
-export const showInfoMessage = (message: string, description?: string) => {
+export const showInfoMessage = (options: flashMessageProps) => {
   showMessage({
-    message: message,
+    message: options.message,
     type: 'info',
-    description: description,
-    style: styles.infoContainer,
+    description: options.description,
+    style: [styles.infoContainer, { backgroundColor: options.backgroundColor }],
     floating: true,
     textStyle: styles.description,
     titleStyle: styles.title,
     icon: { icon: 'info', position: 'left', props: {} },
+    position: 'top',
+  });
+};
+
+export const showNetworkConnectionErrorMessage = (
+  options: flashMessageProps
+) => {
+  showMessage({
+    message: options.message,
+    type: 'none',
+    description: options.description,
+    style: [
+      styles.networkConnectionContainer,
+      { backgroundColor: options.backgroundColor },
+    ],
+    floating: true,
+    textStyle: styles.description,
+    titleStyle: styles.title,
+    icon: () => (
+      <View className="mr-4 h-8 w-8">
+        <Rive
+          resourceName="wifi_connecting_animation"
+          fit={Fit.Contain}
+          autoplay={true}
+        />
+      </View>
+    ),
+    position: 'bottom',
+    duration: undefined,
+  });
+};
+
+export const showNetworkConnectionSuccessMessage = (
+  options: flashMessageProps
+) => {
+  showMessage({
+    message: options.message,
+    type: 'none',
+    description: options.description,
+    style: [
+      styles.networkConnectionContainer,
+      { backgroundColor: options.backgroundColor },
+    ],
+    floating: true,
+    textStyle: styles.description,
+    titleStyle: styles.title,
+    icon: { icon: 'info', position: 'left', props: {} },
+    position: 'bottom',
+    duration: undefined,
   });
 };
 
 const styles = StyleSheet.create({
   successContainer: {
-    backgroundColor: colors.secondaryGreen,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.secondaryGreen,
   },
   errorContainer: {
-    backgroundColor: colors.darkRed,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.darkRed,
   },
   infoContainer: {
-    backgroundColor: colors.purple,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.purple,
+  },
+  networkConnectionContainer: {
     justifyContent: 'center',
     alignItems: 'center',
   },
