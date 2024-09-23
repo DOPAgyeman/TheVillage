@@ -21,7 +21,7 @@ import { NetworkInfo } from '@/core/network-info';
 import { useThemeConfig } from '@/core/use-theme-config';
 import { View } from '@/ui';
 
-import { getItem, setItem } from '../core/storage';
+import { getItem, removeItem, setItem } from '../core/storage';
 
 const tokenCache = {
   async getToken<T>(key: string) {
@@ -29,6 +29,9 @@ const tokenCache = {
   },
   async saveToken<T>(key: string, value: T) {
     return setItem(key, value);
+  },
+  async clearToken(key: string) {
+    return removeItem(key);
   },
 };
 
