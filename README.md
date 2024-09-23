@@ -2,7 +2,7 @@
   <img alt="logo" src="./assets/icon.png" width="124px" style="border-radius:10px"/><br/>
 The Village </h1>
 
-> This is a mobile app built using Expo/React Native, TypeScript, Nativewind/TailwindCSS, Jest, React Query, Husky for pre-commit hooks, GitHub Actions for CI/CD, and Supabase for backend.
+> This is a mobile app currently being built using Expo/React Native, TypeScript, Nativewind/TailwindCSS, Jest, React Query, Husky for pre-commit hooks, GitHub Actions for CI/CD, and Supabase for backend.
 
 ## Requirements
 
