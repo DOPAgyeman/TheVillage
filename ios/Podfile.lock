@@ -1250,6 +1250,8 @@ PODS:
   - react-native-mmkv (2.6.3):
     - MMKV (>= 1.2.13)
     - React-Core
+  - react-native-netinfo (11.3.1):
+    - React-Core
   - react-native-restart (0.0.27):
     - React-Core
   - react-native-safe-area-context (4.10.5):
@@ -1485,6 +1487,10 @@ PODS:
     - React-utils (= 0.74.5)
   - ReactNativeAvoidSoftinput (4.0.2):
     - React-Core
+  - rive-react-native (7.3.0):
+    - React-Core
+    - RiveRuntime (= 5.14.0)
+  - RiveRuntime (5.14.0)
   - RNDateTimePicker (8.0.1):
     - React-Core
   - RNFlashList (1.6.4):
@@ -1671,6 +1677,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
@@ -1697,6 +1704,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeAvoidSoftinput (from `../node_modules/react-native-avoid-softinput`)
+  - rive-react-native (from `../node_modules/rive-react-native`)
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -1712,6 +1720,7 @@ SPEC REPOS:
     - libwebp
     - MMKV
     - MMKVCore
+    - RiveRuntime
     - SDWebImage
     - SDWebImageAVIFCoder
     - SDWebImageSVGCoder
@@ -1830,6 +1839,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
@@ -1882,6 +1893,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeAvoidSoftinput:
     :path: "../node_modules/react-native-avoid-softinput"
+  rive-react-native:
+    :path: "../node_modules/rive-react-native"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNFlashList:
@@ -1958,6 +1971,7 @@ SPEC CHECKSUMS:
   React-logger: 257858bd55f3a4e1bc0cf07ddc8fb9faba6f8c7c
   React-Mapbuffer: 6c1cacdbf40b531f549eba249e531a7d0bfd8e7f
   react-native-mmkv: 2e5bf67513cc8deed86fcffe87e12b8cc250dfab
+  react-native-netinfo: bdb108d340cdb41875c9ced535977cac6d2ff321
   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
   react-native-safe-area-context: a240ad4b683349e48b1d51fed1611138d1bdad97
   React-nativeconfig: ba9a2e54e2f0882cf7882698825052793ed4c851
@@ -1984,6 +1998,8 @@ SPEC CHECKSUMS:
   React-utils: f242eb7e7889419d979ca0e1c02ccc0ea6e43b29
   ReactCommon: f7da14a8827b72704169a48c929bcde802698361
   ReactNativeAvoidSoftinput: b4ec4c8084c397a91800d21170a9949a263d288a
+  rive-react-native: 9d724daa93efa3066e19e53960f83df5098cc112
+  RiveRuntime: c470cc8daa0c192c678f7abb35b980f95d2bb625
   RNDateTimePicker: b6a9b35a785ecbe12b4e7d6de5439d0aa4614146
   RNFlashList: b521ebdd7f9352673817f1d98e8bdc0c8cf8545b
   RNGestureHandler: 2282cfbcf86c360d29f44ace393203afd5c6cff7

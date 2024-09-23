@@ -5,6 +5,7 @@ import { ClerkLoaded, ClerkLoading, ClerkProvider } from '@clerk/clerk-expo';
 import { useReactNavigationDevTools } from '@dev-plugins/react-navigation';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -16,6 +17,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { APIProvider } from '@/api';
 import { hydrateAuth, loadSelectedTheme } from '@/core';
+import { NetworkInfo } from '@/core/network-info';
 import { useThemeConfig } from '@/core/use-theme-config';
 import { View } from '@/ui';
 
@@ -52,7 +54,11 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const navigationRef = useNavigationContainerRef();
   useReactNavigationDevTools(navigationRef);
-  useFonts({ FontAwesome: FontAwesome.font, FontAwesome6: FontAwesome6.font });
+  useFonts({
+    FontAwesome: FontAwesome.font,
+    FontAwesome6: FontAwesome6.font,
+    Ionicons: Ionicons.font,
+  });
   return <RootLayoutNav />;
 }
 
@@ -94,7 +100,9 @@ function Providers({ children }: { children: React.ReactNode }) {
               </ClerkLoading>
               <ClerkLoaded>{children}</ClerkLoaded>
             </ClerkProvider>
-            <FlashMessage position="top" />
+
+            <FlashMessage />
+            <NetworkInfo />
           </BottomSheetModalProvider>
         </APIProvider>
       </ThemeProvider>

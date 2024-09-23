@@ -2,11 +2,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Stack } from 'expo-router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { showMessage } from 'react-native-flash-message';
 import { z } from 'zod';
 
 import { useAddPost } from '@/api';
-import { Button, ControlledInput, showErrorMessage, View } from '@/ui';
+import { Button, ControlledInput, View } from '@/ui';
+import { showErrorMessage, showInfoMessage } from '@/ui/flash-message';
 
 const schema = z.object({
   title: z.string().min(10),
@@ -27,15 +27,12 @@ export default function AddPost() {
       { ...data, userId: 1 },
       {
         onSuccess: () => {
-          showMessage({
-            message: 'Post added successfully',
-            type: 'success',
-          });
+          showInfoMessage({ message: 'Post added successfully' });
           // here you can navigate to the post list and refresh the list data
           //queryClient.invalidateQueries(usePosts.getKey());
         },
         onError: () => {
-          showErrorMessage('Error adding post');
+          showErrorMessage({ message: 'Error adding post' });
         },
       }
     );

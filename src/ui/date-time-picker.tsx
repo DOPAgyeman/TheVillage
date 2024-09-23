@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -24,6 +24,7 @@ export function DateTimePicker<T extends FieldValues>(
 ) {
   const { name, control, mode, label } = props;
   const { field, fieldState } = useController({ control, name });
+
   const isVisible = useDateTimePickerHandler.use.boolean();
   const toggleIsVisible = useDateTimePickerHandler.use.toggleBoolean();
   const theme = useThemeConfig();
@@ -34,16 +35,25 @@ export function DateTimePicker<T extends FieldValues>(
         onPress={toggleIsVisible}
         showSoftInputOnFocus={false}
         label={label}
-        value={field.value.toLocaleString('UTC', {
-          dateStyle: 'short',
-        })}
+        value={
+          field.value
+            ? field.value.toLocaleString('UTC', {
+                dateStyle: 'short',
+              })
+            : null
+        }
         error={fieldState.error?.message}
         onChangeText={field.onChange}
-        defaultValue={field.value.toLocaleString('UTC', {
-          dateStyle: 'short',
-        })}
+        defaultValue={
+          field.value
+            ? field.value.toLocaleString('UTC', {
+                dateStyle: 'short',
+              })
+            : null
+        }
         ref={field.ref}
         selectionColor={'transparent'}
+        inputType="date"
       />
 
       <DateTimePickerModal

@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function */
+import Ionicons from '@expo/vector-icons/Ionicons';
 import * as React from 'react';
 import type {
   Control,
@@ -8,6 +9,7 @@ import type {
 } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 import type { TextInput, TextInputProps } from 'react-native';
+import type { InputModeOptions } from 'react-native';
 import { I18nManager, StyleSheet, View } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
 import Animated, {
@@ -31,7 +33,8 @@ export const inputTv = tv({
     container: 'justify-center',
     label: 'absolute px-4 text-lg text-darkGray dark:text-darkGray',
     input:
-      'w-full rounded-xl border border-darkGray px-4 pb-4 pt-8 text-base text-black placeholder-white focus:border-primary focus:ring-gray dark:border-lightBlack dark:text-white  dark:placeholder-white dark:focus:border-secondaryGreen dark:focus:ring-secondaryGreen',
+      'w-full rounded-xl border border-darkGray pb-4 pl-4 pr-14 pt-8 text-base text-black placeholder-white focus:border-primary focus:ring-gray dark:border-lightBlack dark:text-white  dark:placeholder-white dark:focus:border-secondaryGreen dark:focus:ring-secondaryGreen',
+    icon: 'absolute right-0 top-0 h-2/3 w-2/12 items-center justify-center',
   },
 
   variants: {
@@ -64,6 +67,8 @@ export interface NInputProps extends TextInputProps {
   label?: string;
   disabled?: boolean;
   error?: string;
+  onPressErase?: () => void;
+  inputType?: InputModeOptions | 'date' | 'password';
 }
 
 type TRule<T extends FieldValues> = Omit<
@@ -83,10 +88,20 @@ interface ControlledInputProps<T extends FieldValues>
     InputControllerType<T> {}
 
 export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
-  const { label, error, testID, value, ...inputProps } = props;
+  const {
+    label,
+    error,
+    testID,
+    value,
+    onPressErase,
+    inputType,
+
+    ...inputProps
+  } = props;
   const labelAnimate = useSharedValue<number>(value ? 0 : 1);
   const isFocussed = useBooleanHandler.use.boolean();
   const toggleIsFocussed = useBooleanHandler.use.toggleBoolean();
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const onBlur = React.useCallback(() => {
     toggleIsFocussed();
@@ -100,7 +115,6 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
   }, [toggleIsFocussed, labelAnimate, value]);
   const onFocus = React.useCallback(() => {
     toggleIsFocussed();
-
     labelAnimate.value = withTiming(0, {
       duration: 200,
       easing: Easing.out(Easing.ease),
@@ -157,6 +171,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
             { writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' },
             inputProps.style,
           ])}
+          secureTextEntry={inputType === 'password' ? !showPassword : false}
         />
       </View>
 
@@ -166,6 +181,44 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
       >
         {error}
       </Text>
+      <View className={styles.icon()}>
+        {inputType === 'password' ? (
+          showPassword ? (
+            <Ionicons
+              name="eye-outline"
+              color={colors.darkGray}
+              adjustsFontSizeToFit={true}
+              size={22}
+              onPress={() => setShowPassword(false)}
+            />
+          ) : !showPassword ? (
+            <Ionicons
+              name="eye-off-outline"
+              color={colors.darkGray}
+              adjustsFontSizeToFit={true}
+              size={22}
+              onPress={() => setShowPassword(true)}
+            />
+          ) : null
+        ) : error ? (
+          !value ? null : inputType === 'date' ? null : (
+            <Ionicons
+              name="close-outline"
+              color={theme.dark ? colors.lightRed : colors.darkRed}
+              adjustsFontSizeToFit={true}
+              size={30}
+              onPress={onPressErase}
+            />
+          )
+        ) : !value ? null : inputType === 'date' ? null : (
+          <Ionicons
+            name="checkmark-outline"
+            color={theme.dark ? colors.secondaryGreen : colors.primary}
+            adjustsFontSizeToFit={true}
+            size={30}
+          />
+        )}
+      </View>
     </View>
   );
 });
@@ -176,6 +229,7 @@ export function ControlledInput<T extends FieldValues>(
 ) {
   const { name, control, rules, ...inputProps } = props;
   const { field, fieldState } = useController({ control, name, rules });
+
   return (
     <Input
       ref={field.ref}
@@ -184,6 +238,7 @@ export function ControlledInput<T extends FieldValues>(
       value={(field.value as string) || ''}
       {...inputProps}
       error={fieldState.error?.message}
+      defaultValue={field.value}
     />
   );
 }

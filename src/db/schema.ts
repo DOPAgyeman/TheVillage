@@ -21,8 +21,8 @@ export const users = pgTable('users', {
   first_name: text('first_name').notNull(),
   last_name: text('last_name').notNull(),
   full_name: text('full_name').notNull(),
-  date_of_birth: date('date_of_birth', { mode: 'string' }).notNull(),
-  email: text('email_address').notNull(),
+  date_of_birth: date('date_of_birth', { mode: 'string' }),
+  email_address: text('email_address').notNull(),
   external_accounts: text('external_accounts').array().default([]),
   image_url: text('image_url'),
 });

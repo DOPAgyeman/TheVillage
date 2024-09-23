@@ -11,7 +11,7 @@ export function useSignUpUser(): SubmitHandler<signUpUserType> {
     }
 
     await signUp.create({
-      emailAddress: data.email,
+      emailAddress: data.email_address,
       password: data.password,
       firstName: data.first_name,
       lastName: data.last_name,

@@ -4,17 +4,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { Keyboard } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
 import SignUpScrollList from '@/components/signup/signup-scroll-list';
+import colors from '@/constants/colors';
 import { content } from '@/constants/signup-content';
 import { useSignUpUser, useVerifyUser } from '@/core/auth/email-sign-up';
+import { handleClerkError } from '@/core/auth/errors';
 import type { signUpUserType } from '@/core/auth/schema';
 import { signUpUserSchema } from '@/core/auth/schema';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
 import { useSignUpScrollIndex } from '@/core/zustand/use-signup-scroll-index';
-import { Button, FocusAwareStatusBar, View } from '@/ui';
+import { Button, FocusAwareStatusBar, Text, View } from '@/ui';
+import { showErrorMessage, showSuccessMessage } from '@/ui/flash-message';
 import { ChevronLeft } from '@/ui/icons/chevron-left';
 
 export default function SignUp() {
@@ -30,9 +35,14 @@ export default function SignUp() {
   const {
     handleSubmit: handleSignUp,
     control: signUpControl,
-    formState: { errors: signUpErrors, dirtyFields: signUpDirtyFields },
+    formState: {
+      errors: signUpErrors,
+      dirtyFields: signUpDirtyFields,
+      isSubmitting,
+    },
     getValues,
     setError,
+    resetField,
   } = useForm<signUpUserType>({
     resolver: zodResolver(signUpUserSchema),
     mode: 'all',
@@ -40,7 +50,7 @@ export default function SignUp() {
       first_name: '',
       last_name: '',
       date_of_birth: new Date(),
-      email: '',
+      email_address: '',
       password: '',
       code: '',
     },
@@ -49,38 +59,73 @@ export default function SignUp() {
   const signUpUser = useSignUpUser();
   const verifyUser = useVerifyUser();
 
-  const onPress = useCallback(async () => {
-    if (scrollIndex === content.length - 1) {
+  const onPressButton = useCallback(async () => {
+    if (content[scrollIndex].name === 'code') {
       const getCodeValue = getValues('code');
       if (getCodeValue.length !== 6) {
-        setError('code', {
-          type: 'custom',
-          message: 'Please enter a 6-digit code',
-        });
+        setError(
+          'code',
+          {
+            type: 'custom',
+            message: 'Please enter a 6-digit code',
+          },
+          { shouldFocus: true }
+        );
       } else {
         try {
           await handleSignUp(verifyUser)();
+          if (Keyboard.isVisible()) {
+            Keyboard.dismiss();
+          }
 
           router.replace('/');
           setIndex(0);
         } catch (error) {
-          console.log(JSON.stringify(error, null, 2));
+          if (isClerkAPIResponseError(error)) {
+            handleClerkError({
+              error: error.errors[0],
+              setError: setError,
+              fieldName: 'code',
+              shouldFocus: false,
+              hideFlashMessage: true,
+              backgroundColor: colors.darkRed,
+            });
+          } else {
+            showErrorMessage({
+              message: 'An error has occurred. Please try again later.',
+              backgroundColor: colors.darkRed,
+            });
+          }
         }
       }
-    } else if (scrollIndex === content.length - 2) {
+    } else if (content[scrollIndex].name === 'password') {
       try {
         await handleSignUp(signUpUser)();
         incrementIndex();
+        if (Keyboard.isVisible()) {
+          Keyboard.dismiss();
+        }
       } catch (error) {
         if (isClerkAPIResponseError(error)) {
-          const testerr = error.errors;
-          console.log(JSON.stringify(testerr, null, 2));
+          handleClerkError({
+            error: error.errors[0],
+            setIndex: setIndex,
+            setError: setError,
+            content: content,
+            backgroundColor: colors.darkRed,
+          });
         } else {
-          console.log(error);
+          showErrorMessage({
+            message: 'An error has occurred. Please try again later.',
+            backgroundColor: colors.darkRed,
+          });
         }
       }
     } else {
       incrementIndex();
+      if (Keyboard.isVisible()) {
+        Keyboard.dismiss();
+      }
     }
   }, [
     setIndex,
@@ -96,6 +141,9 @@ export default function SignUp() {
   ]);
 
   const onPressBack = useCallback(() => {
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss();
+    }
     if (scrollIndex === 0) {
       router.back();
     } else {
@@ -103,8 +151,54 @@ export default function SignUp() {
     }
   }, [decrementIndex, router, scrollIndex]);
 
+  const onPressLogIn = useCallback(() => {
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss();
+    }
+    router.back();
+    setIndex(0);
+  }, [setIndex, router]);
+
+  const onPressResendCode = useCallback(async () => {
+    try {
+      await handleSignUp(signUpUser)();
+
+      if (Keyboard.isVisible()) {
+        Keyboard.dismiss();
+      }
+      showSuccessMessage({
+        message: 'Verification code sent successfully',
+        backgroundColor: colors.secondaryGreen,
+      });
+    } catch (error) {
+      if (isClerkAPIResponseError(error)) {
+        handleClerkError({
+          error: error.errors[0],
+          setIndex: setIndex,
+          setError: setError,
+          content: content,
+          backgroundColor: colors.darkRed,
+        });
+      } else {
+        showErrorMessage({
+          message: 'An error has occurred. Please try again later.',
+          backgroundColor: colors.darkRed,
+        });
+      }
+    }
+  }, [handleSignUp, signUpUser, setError, setIndex]);
+
   return (
-    <Animated.View className="h-full bg-gray py-14 dark:bg-black">
+    <Animated.View className="h-full py-14">
+      <View
+        className="bg-white dark:bg-black"
+        style={StyleSheet.absoluteFillObject}
+        onTouchEnd={() => {
+          if (Keyboard.isVisible()) {
+            Keyboard.dismiss();
+          }
+        }}
+      />
       <FocusAwareStatusBar />
       <ChevronLeft onPress={onPressBack} />
 
@@ -114,19 +208,41 @@ export default function SignUp() {
         setIndex={setIndex}
         content={content}
         control={signUpControl}
+        resetField={resetField}
       />
 
-      <View className="px-5">
+      <View className="gap-4 px-5">
         <Button
           testID="signup-button"
           label={scrollIndex === content.length - 1 ? 'Sign up' : 'Next'}
-          onPress={onPress}
+          onPress={onPressButton}
           disabled={
             signUpErrors[content[scrollIndex].name] ||
             !signUpDirtyFields[content[scrollIndex].name]
               ? true
               : false
           }
+          loading={isSubmitting}
+        />
+        {content[scrollIndex].name === 'code' && (
+          <Button
+            label="Resend verification code"
+            variant="ghost"
+            textClassName="text-sm text-darkGray dark:text-darkGray no-underline font-semibold"
+            onPress={onPressResendCode}
+          />
+        )}
+      </View>
+      <View className="absolute bottom-14 w-3/4 flex-row flex-wrap items-center justify-center gap-1 self-center pt-5">
+        <Text className="text-sm text-black dark:text-white">
+          Already have an account?
+        </Text>
+        <Button
+          variant="ghost"
+          textClassName="text-sm text-black dark:text-white no-underline font-semibold"
+          label="Log in"
+          className="m-0 h-max w-fit p-0"
+          onPress={onPressLogIn}
         />
       </View>
     </Animated.View>
