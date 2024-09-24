@@ -102,9 +102,17 @@ export const showNetworkConnectionSuccessMessage = (
     floating: true,
     textStyle: styles.description,
     titleStyle: styles.title,
-    icon: { icon: 'info', position: 'left', props: {} },
+    icon: () => (
+      <View className="mr-4 h-8 w-8">
+        <Rive
+          resourceName="wifi_connected_animation"
+          fit={Fit.Contain}
+          autoplay={true}
+        />
+      </View>
+    ),
     position: 'bottom',
-    duration: undefined,
+    duration: 5000,
   });
 };
 
