@@ -17,7 +17,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { APIProvider } from '@/api';
 import { hydrateAuth, loadSelectedTheme } from '@/core';
-import { NetworkInfo } from '@/core/network-info';
+import { useNetworkInfo } from '@/core/use-network-info';
 import { useThemeConfig } from '@/core/use-theme-config';
 import { View } from '@/ui';
 
@@ -81,6 +81,7 @@ function RootLayoutNav() {
 
 function Providers({ children }: { children: React.ReactNode }) {
   const theme = useThemeConfig();
+  useNetworkInfo();
   return (
     <GestureHandlerRootView
       style={styles.container}
@@ -105,7 +106,6 @@ function Providers({ children }: { children: React.ReactNode }) {
             </ClerkProvider>
 
             <FlashMessage />
-            <NetworkInfo />
           </BottomSheetModalProvider>
         </APIProvider>
       </ThemeProvider>

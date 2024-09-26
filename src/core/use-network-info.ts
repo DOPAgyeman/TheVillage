@@ -1,6 +1,5 @@
 import NetInfo from '@react-native-community/netinfo';
 import { onlineManager } from '@tanstack/react-query';
-import React from 'react';
 
 import {
   showNetworkConnectionErrorMessage,
@@ -11,7 +10,7 @@ import colors from '../constants/colors';
 import { useThemeConfig } from './use-theme-config';
 import { useNetworkConnectionHandler } from './zustand/use-network-connection-handler';
 
-export function NetworkInfo() {
+export function useNetworkInfo() {
   const colorTheme = useThemeConfig();
   const isWaitingToReconnect =
     useNetworkConnectionHandler.use.isWaitingToReconnect();
@@ -42,5 +41,4 @@ export function NetworkInfo() {
       }
     });
   });
-  return <></>;
 }
