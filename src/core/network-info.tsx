@@ -1,53 +1,46 @@
-import { addEventListener } from '@react-native-community/netinfo';
-import React, { useEffect } from 'react';
+import NetInfo from '@react-native-community/netinfo';
+import { onlineManager } from '@tanstack/react-query';
+import React from 'react';
 
-import colors from '@/constants/colors';
-import { Button, View } from '@/ui';
 import {
   showNetworkConnectionErrorMessage,
   showNetworkConnectionSuccessMessage,
 } from '@/ui/flash-message';
 
+import colors from '../constants/colors';
+import { useThemeConfig } from './use-theme-config';
 import { useNetworkConnectionHandler } from './zustand/use-network-connection-handler';
 
 export function NetworkInfo() {
+  const colorTheme = useThemeConfig();
   const isWaitingToReconnect =
     useNetworkConnectionHandler.use.isWaitingToReconnect();
   const setIsWaitingToReconnect =
     useNetworkConnectionHandler.use.setIsWaitingToReconnect();
 
-  useEffect(() => {
-    const unsubscribe = addEventListener((state) => {
-      if (state.isConnected === false && isWaitingToReconnect !== true) {
-        showNetworkConnectionErrorMessage({
-          message: 'You are not connected to the internet.',
-          backgroundColor: colors.lightBlack,
-        });
-        setIsWaitingToReconnect(true);
-      } else if (state.isConnected === true && isWaitingToReconnect === true) {
+  onlineManager.setEventListener((setOnline) => {
+    return NetInfo.addEventListener((state) => {
+      setOnline(!!state.isConnected);
+      if (state.isConnected === true && isWaitingToReconnect === true) {
         showNetworkConnectionSuccessMessage({
-          message: 'Your internet connection has been restored.',
-          backgroundColor: colors.lightBlack,
+          message: 'Your network connection has been restored.',
+          backgroundColor: colorTheme.dark
+            ? colors.lightCream
+            : colors.lightBlack,
+          titleColor: colorTheme.dark ? colors.black : colors.white,
         });
         setIsWaitingToReconnect(false);
+      } else if (state.isConnected === false && isWaitingToReconnect !== true) {
+        showNetworkConnectionErrorMessage({
+          message: 'You are not connected to the internet.',
+          backgroundColor: colorTheme.dark
+            ? colors.lightCream
+            : colors.lightBlack,
+          titleColor: colorTheme.dark ? colors.black : colors.white,
+        });
+        setIsWaitingToReconnect(true);
       }
     });
-    return () => unsubscribe();
-  }, [isWaitingToReconnect, setIsWaitingToReconnect]);
-
-  return (
-    <View className="absolute inset-x-0 bottom-60 z-50">
-      <Button
-        label="test"
-        variant="ghost"
-        onPress={() =>
-          showNetworkConnectionErrorMessage({
-            message: 'You are not connected to the internet.',
-            description: '',
-            backgroundColor: colors.lightBlack,
-          })
-        }
-      />
-    </View>
-  );
+  });
+  return <></>;
 }

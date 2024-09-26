@@ -10,6 +10,7 @@ type flashMessageProps = {
   message: string;
   description?: string;
   backgroundColor?: string;
+  titleColor?: string;
 };
 
 export const showSuccessMessage = (options: flashMessageProps) => {
@@ -73,7 +74,7 @@ export const showNetworkConnectionErrorMessage = (
     ],
     floating: true,
     textStyle: styles.description,
-    titleStyle: styles.title,
+    titleStyle: [styles.title, { color: options.titleColor }],
     icon: () => (
       <View className="mr-4 h-8 w-8">
         <Rive
@@ -84,7 +85,7 @@ export const showNetworkConnectionErrorMessage = (
       </View>
     ),
     position: 'bottom',
-    duration: undefined,
+    duration: 10000,
   });
 };
 
@@ -101,7 +102,7 @@ export const showNetworkConnectionSuccessMessage = (
     ],
     floating: true,
     textStyle: styles.description,
-    titleStyle: styles.title,
+    titleStyle: [styles.title, { color: options.titleColor }],
     icon: () => (
       <View className="mr-4 h-8 w-8">
         <Rive
