@@ -42,8 +42,8 @@ importers:
         specifier: ^2.45.3
         version: 2.45.3
       '@tanstack/react-query':
-        specifier: ^5.45.1
-        version: 5.45.1(react@18.2.0)
+        specifier: ^5.56.2
+        version: 5.56.2(react@18.2.0)
       Ionicons@latest:
         specifier: link:@expo/vector-icons/Ionicons@latest
         version: link:@expo/vector-icons/Ionicons@latest
@@ -184,7 +184,7 @@ importers:
         version: 0.19.12(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-query-kit:
         specifier: ^3.3.0
-        version: 3.3.0(@tanstack/react-query@5.45.1(react@18.2.0))
+        version: 3.3.0(@tanstack/react-query@5.56.2(react@18.2.0))
       rive-react-native:
         specifier: ^7.3.0
         version: 7.3.0(react-native@0.74.5(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
@@ -215,7 +215,7 @@ importers:
         version: 0.0.6(@react-navigation/core@6.4.16(react@18.2.0))(expo@51.0.31(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(react@18.2.0)
       '@dev-plugins/react-query':
         specifier: ^0.0.6
-        version: 0.0.6(@tanstack/react-query@5.45.1(react@18.2.0))(expo@51.0.31(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+        version: 0.0.6(@tanstack/react-query@5.56.2(react@18.2.0))(expo@51.0.31(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@expo/config':
         specifier: ~9.0.2
         version: 9.0.2
@@ -2399,13 +2399,13 @@ packages:
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
     engines: {node: '>=10'}
 
-  '@tanstack/query-core@5.45.0':
-    resolution: {integrity: sha512-RVfIZQmFUTdjhSAAblvueimfngYyfN6HlwaJUPK71PKd7yi43Vs1S/rdimmZedPWX/WGppcq/U1HOj7O7FwYxw==}
+  '@tanstack/query-core@5.56.2':
+    resolution: {integrity: sha512-gor0RI3/R5rVV3gXfddh1MM+hgl0Z4G7tj6Xxpq6p2I03NGPaJ8dITY9Gz05zYYb/EJq9vPas/T4wn9EaDPd4Q==}
 
-  '@tanstack/react-query@5.45.1':
-    resolution: {integrity: sha512-mYYfJujKg2kxmkRRjA6nn4YKG3ITsKuH22f1kteJ5IuVQqgKUgbaSQfYwVP0gBS05mhwxO03HVpD0t7BMN7WOA==}
+  '@tanstack/react-query@5.56.2':
+    resolution: {integrity: sha512-SR0GzHVo6yzhN72pnRhkEFRAHMsUo5ZPzAxfTMvUxFIDVS6W9LYUp6nXW3fcHVdg0ZJl8opSH85jqahvm6DSVg==}
     peerDependencies:
-      react: ^18.0.0
+      react: ^18 || ^19
 
   '@testing-library/jest-dom@5.17.0':
     resolution: {integrity: sha512-ynmNeT7asXyH3aSVv4vvX4Rb+0qjOhdNHnO/3vuZNqPmhDpV/+rCSGwQ7bLcmU2cJ4dvoheIO85LQj0IbJHEtg==}
@@ -9624,9 +9624,9 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@dev-plugins/react-query@0.0.6(@tanstack/react-query@5.45.1(react@18.2.0))(expo@51.0.31(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
+  '@dev-plugins/react-query@0.0.6(@tanstack/react-query@5.56.2(react@18.2.0))(expo@51.0.31(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
-      '@tanstack/react-query': 5.45.1(react@18.2.0)
+      '@tanstack/react-query': 5.56.2(react@18.2.0)
       expo: 51.0.31(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       flatted: 3.3.1
 
@@ -11391,11 +11391,11 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tanstack/query-core@5.45.0': {}
+  '@tanstack/query-core@5.56.2': {}
 
-  '@tanstack/react-query@5.45.1(react@18.2.0)':
+  '@tanstack/react-query@5.56.2(react@18.2.0)':
     dependencies:
-      '@tanstack/query-core': 5.45.0
+      '@tanstack/query-core': 5.56.2
       react: 18.2.0
 
   '@testing-library/jest-dom@5.17.0':
@@ -16725,9 +16725,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  react-query-kit@3.3.0(@tanstack/react-query@5.45.1(react@18.2.0)):
+  react-query-kit@3.3.0(@tanstack/react-query@5.56.2(react@18.2.0)):
     optionalDependencies:
-      '@tanstack/react-query': 5.45.1(react@18.2.0)
+      '@tanstack/react-query': 5.56.2(react@18.2.0)
 
   react-refresh@0.14.2: {}
 
