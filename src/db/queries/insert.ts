@@ -1,22 +1,12 @@
 import type { GetToken } from '@clerk/types';
+import type { Database } from 'database.types';
 
 import { clerkSupabaseClient } from '../index';
-import type { insertUserType } from './schemas/insert-schemas';
-
-export const insertUserIntoDatabase = async (
-  user: insertUserType,
-  getToken: GetToken
-) => {
-  const db = await clerkSupabaseClient(getToken);
-
-  const { error } = await db.from('users').insert(user);
-  if (error) throw error;
-};
 
 export const updateUser = async (
   getToken: GetToken,
   userId: string,
-  user: Partial<insertUserType>
+  user: Partial<Database['public']['Tables']['users']['Row']>
 ) => {
   const db = await clerkSupabaseClient(getToken);
 
