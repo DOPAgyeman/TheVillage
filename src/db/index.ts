@@ -17,7 +17,6 @@ export async function clerkSupabaseClient(getToken: GetToken) {
               throw new Error(`Failed to get clerk token ${error}`);
             }
           );
-          console.log('token', token);
           const headers = new Headers(options?.headers);
           headers.set('Authorization', `Bearer ${token}`);
           return fetch(url, { ...options, headers }).catch((error) => {
