@@ -11,7 +11,6 @@ type handleClerkErrorProps = {
   fieldName?: string;
   shouldFocus?: boolean;
   hideFlashMessage?: boolean;
-  backgroundColor: string;
 };
 
 export const handleClerkError = (options: handleClerkErrorProps) => {
@@ -22,7 +21,6 @@ export const handleClerkError = (options: handleClerkErrorProps) => {
         options.error.longMessage === options.error.message
           ? ''
           : options.error.longMessage,
-      backgroundColor: options.backgroundColor,
     });
   }
   if (options.content) {

@@ -9,7 +9,7 @@ import type { UpdateUserResponse } from '../types';
 export const useUpdateUser = createMutation<
   UpdateUserResponse,
   updateUserOptions,
-  ClerkAPIError
+  ClerkAPIError | Error
 >({
   mutationFn: async (user) =>
     await updateUser({

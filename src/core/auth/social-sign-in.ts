@@ -1,27 +1,31 @@
-import { useOAuth } from '@clerk/clerk-expo';
-import type { OAuthStrategy } from '@clerk/types';
-import { useRouter } from 'expo-router';
-import React from 'react';
+import type {
+  StartOAuthFlowParams,
+  StartOAuthFlowReturnType,
+} from '@clerk/clerk-expo';
+import { isClerkAPIResponseError } from '@clerk/clerk-expo';
 
-export const SocialSignIn = (strategy: OAuthStrategy) => {
-  const router = useRouter();
+export type SocialSignInOptions = {
+  startOAuthFlow: (
+    startOAuthFlowParams?: StartOAuthFlowParams
+  ) => Promise<StartOAuthFlowReturnType>;
+};
 
-  const { startOAuthFlow } = useOAuth({ strategy: strategy });
+export const SocialSignIn = async (options: SocialSignInOptions) => {
+  try {
+    const { createdSessionId, setActive, authSessionResult } =
+      await options.startOAuthFlow();
 
-  return React.useCallback(async () => {
-    try {
-      const { createdSessionId, setActive } = await startOAuthFlow();
-
-      if (createdSessionId) {
-        if (setActive) {
-          await setActive({ session: createdSessionId });
-          router.replace('/');
-        }
-      } else {
-        // Use signIn or signUp for next steps such as MFA
-      }
-    } catch (err) {
-      console.error('OAuth error', err);
+    if (createdSessionId && setActive) {
+      await setActive({ session: createdSessionId });
+      return authSessionResult ?? 'Success';
+    } else {
+      throw new Error('An error has occurred while signing in');
     }
-  }, [startOAuthFlow, router]);
+  } catch (error) {
+    if (isClerkAPIResponseError(error)) {
+      throw error;
+    } else {
+      throw new Error('An error has occurred while signing in');
+    }
+  }
 };

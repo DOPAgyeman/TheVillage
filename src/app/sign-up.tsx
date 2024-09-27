@@ -80,12 +80,10 @@ export default function SignUp() {
                 setIndex: setIndex,
                 setError: setError,
                 content: content,
-                backgroundColor: colors.darkRed,
               });
             } else {
               showErrorMessage({
                 message: error.message,
-                backgroundColor: colors.darkRed,
               });
             }
           },
@@ -121,12 +119,10 @@ export default function SignUp() {
                 fieldName: 'code',
                 shouldFocus: false,
                 hideFlashMessage: true,
-                backgroundColor: colors.darkRed,
               });
             } else {
               showErrorMessage({
                 message: 'An error has occurred. Please try again later.',
-                backgroundColor: colors.darkRed,
               });
             }
           },
@@ -161,12 +157,10 @@ export default function SignUp() {
                 setIndex: setIndex,
                 setError: setError,
                 content: content,
-                backgroundColor: colors.darkRed,
               });
             } else {
               showErrorMessage({
                 message: error.message,
-                backgroundColor: colors.darkRed,
               });
             }
           },
