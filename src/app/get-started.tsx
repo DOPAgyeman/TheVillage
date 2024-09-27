@@ -2,11 +2,11 @@ import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { Dimensions } from 'react-native';
 
+import { ContinueWithApple } from '@/components/login/continue-with-apple';
+import { ContinueWithEmail } from '@/components/login/continue-with-email';
+import { ContinueWithFacebook } from '@/components/login/continue-with-facebook';
+import { ContinueWithGoogle } from '@/components/login/continue-with-google';
 import { Button, Image, Text, View } from '@/ui';
-import { ContinueWithApple } from '@/ui/login/continue-with-apple';
-import { ContinueWithEmail } from '@/ui/login/continue-with-email';
-import { ContinueWithFacebook } from '@/ui/login/continue-with-facebook';
-import { ContinueWithGoogle } from '@/ui/login/continue-with-google';
 
 export const useWarmUpBrowser = () => {
   React.useEffect(() => {
@@ -21,8 +21,8 @@ export const useWarmUpBrowser = () => {
 
 WebBrowser.maybeCompleteAuthSession();
 
-const windowWidth = Dimensions.get('window').width;
 export default function GetStarted() {
+  const windowWidth = Dimensions.get('window').width;
   useWarmUpBrowser();
   return (
     <View className="h-full w-screen items-center justify-end gap-28 bg-gray dark:bg-black">
