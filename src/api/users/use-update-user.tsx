@@ -3,17 +3,11 @@ import { createMutation } from 'react-query-kit';
 
 import type { updateUserOptions } from '@/core/auth/queries/update';
 import { updateUser } from '@/core/auth/queries/update';
-import type { UserUnsafeMetadata } from '@/core/auth/types';
 
-type Response = {
-  firstName: string | null;
-  lastName: string | null;
-  primaryEmailAddressId: string | null;
-  unsafeMetadata: UserUnsafeMetadata;
-};
+import type { UserResponse } from '../types';
 
 export const useUpdateUser = createMutation<
-  Response,
+  UserResponse,
   updateUserOptions,
   ClerkAPIError
 >({

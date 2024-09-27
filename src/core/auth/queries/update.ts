@@ -14,23 +14,20 @@ export type updateUserOptions = {
 };
 
 export const updateUser = async (options: updateUserOptions) => {
-  const update = await options.userResource
-    .update(options.user)
-    .then((res) => {
-      return {
-        firstName: res.firstName,
-        lastName: res.lastName,
-        primaryEmailAddressId: res.primaryEmailAddressId,
-        unsafeMetadata: res.unsafeMetadata,
-      };
-    })
-    .catch((error) => {
-      if (isClerkAPIResponseError(error)) {
-        throw new Error(error.errors[0].longMessage ?? error.errors[0].message);
-      } else {
-        throw new Error('An error has occurred while updating the user');
-      }
-    });
+  try {
+    const update = await options.userResource.update(options.user);
 
-  return update;
+    return {
+      firstName: update.firstName,
+      lastName: update.lastName,
+      primaryEmailAddressId: update.primaryEmailAddressId,
+      unsafeMetadata: update.unsafeMetadata,
+    };
+  } catch (error) {
+    if (isClerkAPIResponseError(error)) {
+      throw new Error(error.errors[0].longMessage ?? error.errors[0].message);
+    } else {
+      throw new Error('An error has occurred while updating the user');
+    }
+  }
 };
