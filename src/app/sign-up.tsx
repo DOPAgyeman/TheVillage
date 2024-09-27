@@ -189,10 +189,10 @@ export default function SignUp() {
           { shouldFocus: true }
         );
       } else {
-        handleSignUp(verifyUser)();
+        await handleSignUp(verifyUser)();
       }
     } else if (content[scrollIndex].name === 'password') {
-      handleSignUp(signUpUser)();
+      await handleSignUp(signUpUser)();
     } else {
       incrementIndex();
       if (Keyboard.isVisible()) {
