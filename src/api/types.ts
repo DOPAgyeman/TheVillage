@@ -6,7 +6,7 @@ export type PaginateQuery<T> = {
   previous: string | null;
 };
 
-export type UserResponse = {
+export type UpdateUserResponse = {
   firstName: string | null;
   lastName: string | null;
   primaryEmailAddressId: string | null;

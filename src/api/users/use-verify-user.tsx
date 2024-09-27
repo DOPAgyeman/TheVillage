@@ -11,7 +11,7 @@ export const useVerifyUser = createMutation<
   ClerkAPIError | Error
 >({
   mutationFn: async (user) =>
-    verifyUser({
+    await verifyUser({
       isLoaded: user.isLoaded,
       signUp: user.signUp,
       data: user.data,

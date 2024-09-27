@@ -10,7 +10,7 @@ import type {
 import { useController } from 'react-hook-form';
 import type { TextInput, TextInputProps } from 'react-native';
 import type { InputModeOptions } from 'react-native';
-import { I18nManager, StyleSheet, View } from 'react-native';
+import { I18nManager, Pressable, StyleSheet, View } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
 import Animated, {
   Easing,
@@ -184,31 +184,34 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
       <View className={styles.icon()}>
         {inputType === 'password' ? (
           showPassword ? (
-            <Ionicons
-              name="eye-outline"
-              color={colors.darkGray}
-              adjustsFontSizeToFit={true}
-              size={22}
-              onPress={() => setShowPassword(false)}
-            />
+            <Pressable onPress={() => setShowPassword(false)}>
+              <Ionicons
+                name="eye-outline"
+                color={colors.darkGray}
+                adjustsFontSizeToFit={true}
+                size={22}
+              />
+            </Pressable>
           ) : !showPassword ? (
-            <Ionicons
-              name="eye-off-outline"
-              color={colors.darkGray}
-              adjustsFontSizeToFit={true}
-              size={22}
-              onPress={() => setShowPassword(true)}
-            />
+            <Pressable onPress={() => setShowPassword(true)}>
+              <Ionicons
+                name="eye-off-outline"
+                color={colors.darkGray}
+                adjustsFontSizeToFit={true}
+                size={22}
+              />
+            </Pressable>
           ) : null
         ) : error ? (
           !value ? null : inputType === 'date' ? null : (
-            <Ionicons
-              name="close-outline"
-              color={theme.dark ? colors.lightRed : colors.darkRed}
-              adjustsFontSizeToFit={true}
-              size={30}
-              onPress={onPressErase}
-            />
+            <Pressable onPress={onPressErase}>
+              <Ionicons
+                name="close-outline"
+                color={theme.dark ? colors.lightRed : colors.darkRed}
+                adjustsFontSizeToFit={true}
+                size={30}
+              />
+            </Pressable>
           )
         ) : !value ? null : inputType === 'date' ? null : (
           <Ionicons

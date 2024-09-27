@@ -25,7 +25,7 @@ export const updateUser = async (options: updateUserOptions) => {
     };
   } catch (error) {
     if (isClerkAPIResponseError(error)) {
-      throw new Error(error.errors[0].longMessage ?? error.errors[0].message);
+      throw error;
     } else {
       throw new Error('An error has occurred while updating the user');
     }

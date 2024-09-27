@@ -4,19 +4,17 @@ import { createMutation } from 'react-query-kit';
 import type { updateUserOptions } from '@/core/auth/queries/update';
 import { updateUser } from '@/core/auth/queries/update';
 
-import type { UserResponse } from '../types';
+import type { UpdateUserResponse } from '../types';
 
 export const useUpdateUser = createMutation<
-  UserResponse,
+  UpdateUserResponse,
   updateUserOptions,
   ClerkAPIError
 >({
-  mutationFn: async (user) => {
-    const updatedUser = await updateUser({
+  mutationFn: async (user) =>
+    await updateUser({
       user: user.user,
       userResource: user.userResource,
-    });
-    return updatedUser;
-  },
+    }),
   networkMode: 'online',
 });

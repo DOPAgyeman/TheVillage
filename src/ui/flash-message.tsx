@@ -27,6 +27,7 @@ export const showSuccessMessage = (options: flashMessageProps) => {
     titleStyle: styles.title,
     icon: { icon: 'success', position: 'left', props: {} },
     position: 'top',
+    duration: 5000,
   });
 };
 
@@ -44,6 +45,7 @@ export const showErrorMessage = (options: flashMessageProps) => {
     titleStyle: styles.title,
     icon: { icon: 'danger', position: 'left', props: {} },
     position: 'top',
+    duration: 5000,
   });
 };
 

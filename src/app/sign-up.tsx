@@ -272,8 +272,9 @@ export default function SignUp() {
           <Button
             label="Resend verification code"
             variant="ghost"
-            textClassName="text-sm text-darkGray dark:text-darkGray no-underline font-semibold"
+            textClassName="text-sm text-lightBlack dark:text-darkGray no-underline font-semibold"
             onPress={onPressResendCode}
+            className="h-fit w-fit self-center p-4"
           />
         )}
       </View>

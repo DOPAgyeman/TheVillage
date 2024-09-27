@@ -13,7 +13,7 @@ export const signUpUserSchema = insertUserSchema.extend({
     .regex(passwordRegex, {
       message: 'Please ensure your password meets the requirements',
     }),
-  code: z.string(),
+  code: z.string().max(6, { message: 'Please enter a 6-digit code' }),
 });
 
 export type signUpUserType = z.infer<typeof signUpUserSchema>;
