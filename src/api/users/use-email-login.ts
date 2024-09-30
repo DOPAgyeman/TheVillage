@@ -2,8 +2,8 @@ import type { ClerkAPIError } from '@clerk/types';
 import { createMutation } from 'react-query-kit';
 
 import type { EmailLoginFormType } from '@/components/login-form';
-import type { loginUserOptions } from '@/core/auth/email-login';
-import { loginUser } from '@/core/auth/email-login';
+import type { loginUserOptions } from '@/core/auth/actions/email-login';
+import { loginUser } from '@/core/auth/actions/email-login';
 
 export const useLoginUser = createMutation<
   EmailLoginFormType,

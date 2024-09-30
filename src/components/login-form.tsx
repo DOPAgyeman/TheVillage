@@ -82,7 +82,7 @@ export const LoginForm = () => {
               handleClerkError({
                 error: error.errors[0],
                 setError: setError,
-                content: [{ name: 'email' }, { name: 'password' }],
+                content: [{ name: 'email_address' }, { name: 'password' }],
               });
             } else {
               showErrorMessage({

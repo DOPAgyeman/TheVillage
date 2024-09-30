@@ -33,14 +33,14 @@ export const inputTv = tv({
     container: 'justify-center',
     label: 'absolute px-4 text-lg text-darkGray dark:text-darkGray',
     input:
-      'w-full rounded-xl border border-darkGray pb-4 pl-4 pr-14 pt-8 text-base text-black placeholder-white focus:border-primary focus:ring-gray dark:border-lightBlack dark:text-white  dark:placeholder-white dark:focus:border-secondaryGreen dark:focus:ring-secondaryGreen',
+      'w-full rounded-xl border border-lightGray pb-4 pl-4 pr-14 pt-8 text-base text-black placeholder-white focus:border-primary focus:ring-gray dark:border-lightBlack dark:text-white  dark:placeholder-white dark:focus:border-secondaryGreen dark:focus:ring-secondaryGreen',
     icon: 'absolute right-0 top-0 h-2/3 w-2/12 items-center justify-center',
   },
 
   variants: {
     focused: {
       true: {
-        input: 'border-gray dark:border-lightBlack',
+        input: 'border-lightGray dark:border-lightBlack',
       },
     },
     error: {
