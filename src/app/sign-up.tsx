@@ -122,7 +122,7 @@ export default function SignUp() {
               });
             } else {
               showErrorMessage({
-                message: 'An error has occurred. Please try again later.',
+                message: error.message,
               });
             }
           },

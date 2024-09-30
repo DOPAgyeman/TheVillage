@@ -39,7 +39,7 @@ export const ContinueWithGoogle = () => {
   return (
     <>
       <Button
-        className="w-4/5 self-center bg-black dark:bg-lightBlack"
+        className="w-4/5 self-center bg-lightBlack dark:bg-lightBlack"
         label="Continue with Email"
         onPress={signIn}
         loading={isPending}

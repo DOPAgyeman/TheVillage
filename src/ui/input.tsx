@@ -147,7 +147,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
   const theme = useThemeConfig();
 
   return (
-    <View className="relative gap-4">
+    <View className="relative gap-2 pb-2">
       <View className={styles.container()}>
         {label && (
           <Animated.Text

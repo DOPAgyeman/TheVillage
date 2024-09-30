@@ -71,7 +71,10 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen name="get-started" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="get-started"
+          options={{ headerShown: false, presentation: 'fullScreenModal' }}
+        />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="sign-up" options={{ headerShown: false }} />
       </Stack>
