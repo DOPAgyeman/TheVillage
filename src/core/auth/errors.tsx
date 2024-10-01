@@ -16,10 +16,16 @@ type handleClerkErrorProps = {
 export const handleClerkError = (options: handleClerkErrorProps) => {
   if (!options.hideFlashMessage) {
     showErrorMessage({
-      message: options.error.message,
+      message:
+        options.error.meta?.paramName === 'code'
+          ? 'Incorrect code'
+          : String(options.error.message).charAt(0).toUpperCase() +
+            options.error.message.slice(1),
       description:
         options.error.longMessage === options.error.message
           ? ''
+          : options.error.meta?.paramName === 'code'
+          ? 'You have entered an incorrect code. Please try again.'
           : options.error.longMessage,
     });
   }
@@ -30,13 +36,17 @@ export const handleClerkError = (options: handleClerkErrorProps) => {
     let fieldWithErrorIndex = options.content.findIndex(
       (item: { name: string }) => item.name === options.error.meta?.paramName
     );
+    console.log(options.error);
     if (findFieldWithError) {
       if (options.setError) {
         options.setError(
           findFieldWithError.name,
           {
             type: 'custom',
-            message: options.error.message,
+            message:
+              options.error.meta?.paramName === 'code'
+                ? 'You have entered an incorrect code. Please try again.'
+                : options.error.message,
           },
           { shouldFocus: true }
         );
@@ -55,7 +65,7 @@ export const handleClerkError = (options: handleClerkErrorProps) => {
         type: 'custom',
         message:
           options.error.meta?.paramName === 'code'
-            ? 'Incorrect code. Please try again.'
+            ? 'You have entered an incorrect code. Please try again.'
             : options.error.message,
       },
       { shouldFocus: options.shouldFocus || true }

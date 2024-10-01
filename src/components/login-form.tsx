@@ -2,32 +2,28 @@
 import { useSignIn } from '@clerk/clerk-expo';
 import { isClerkAPIResponseError } from '@clerk/clerk-expo';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { Href } from 'expo-router';
 import { useRouter } from 'expo-router';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { Keyboard } from 'react-native';
-import * as z from 'zod';
 
 import { useLoginUser } from '@/api/users/use-email-login';
 import { handleClerkError } from '@/core/auth/errors';
+import type { signUpUserType } from '@/core/auth/schema';
+import { signUpUserSchema } from '@/core/auth/schema';
 import { Button, ControlledInput, Text, View } from '@/ui';
 import { showErrorMessage } from '@/ui/flash-message';
 
-const schema = z.object({
-  email: z
-    .string({
-      required_error: 'Email is required',
-    })
-    .min(1, { message: 'Please enter your email address' })
-    .email('Please enter a valid email address'),
-  password: z
-    .string({
-      required_error: 'Password is required',
-    })
-    .min(8, 'Password must be at least 8 characters'),
-});
+export type EmailLoginFormType = Pick<
+  signUpUserType,
+  'email_address' | 'password'
+>;
 
-export type EmailLoginFormType = z.infer<typeof schema>;
+const loginSchema = signUpUserSchema.pick({
+  email_address: true,
+  password: true,
+});
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -43,16 +39,16 @@ export const LoginForm = () => {
     resetField,
     setError,
   } = useForm<EmailLoginFormType>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(loginSchema),
     mode: 'all',
     defaultValues: {
-      email: '',
+      email_address: '',
       password: '',
     },
   });
 
   const resetEmailField = useCallback(() => {
-    resetField('email', {
+    resetField('email_address', {
       keepError: false,
       keepDirty: false,
       keepTouched: true,
@@ -96,6 +92,10 @@ export const LoginForm = () => {
     [isLoaded, setActive, signIn, _loginUser, router, setError]
   );
 
+  const onPressForgotPassword = useCallback(() => {
+    router.push('/forgot-password' as Href<'forgot-password'>);
+  }, [router]);
+
   return (
     <View className="relative flex w-full flex-col gap-2">
       <View className="gap-2 pb-8">
@@ -108,7 +108,7 @@ export const LoginForm = () => {
       </View>
       <ControlledInput
         control={control}
-        name="email"
+        name="email_address"
         label="Email address"
         keyboardType="email-address"
         inputType="text"
@@ -127,9 +127,9 @@ export const LoginForm = () => {
         onPress={handleSubmit(loginUser)}
         variant="default"
         disabled={
-          logInErrors.email || logInErrors.password
+          logInErrors.email_address || logInErrors.password
             ? true
-            : !logInDirtyFields.email && !logInDirtyFields.password
+            : !logInDirtyFields.email_address && !logInDirtyFields.password
             ? true
             : false
         }
@@ -141,6 +141,7 @@ export const LoginForm = () => {
           label="Forgot your password?"
           variant="ghost"
           textClassName="no-underline font-normal text-black dark:text-white"
+          onPress={onPressForgotPassword}
         />
       </View>
     </View>

@@ -17,7 +17,7 @@ export const loginUser = async (options: loginUserOptions) => {
   // Start the sign-in process using the email and password provided
   try {
     const signInAttempt = await options.signIn.create({
-      identifier: options.data.email,
+      identifier: options.data.email_address,
       password: options.data.password,
     });
 

@@ -13,7 +13,6 @@ import Animated from 'react-native-reanimated';
 import { useSignUpUser } from '@/api/users/use-signup-user';
 import { useVerifyUser } from '@/api/users/use-verify-user';
 import SignUpScrollList from '@/components/signup/signup-scroll-list';
-import colors from '@/constants/colors';
 import { content } from '@/constants/signup-content';
 import { handleClerkError } from '@/core/auth/errors';
 import type { signUpUserType } from '@/core/auth/schema';
@@ -147,7 +146,6 @@ export default function SignUp() {
             }
             showSuccessMessage({
               message: 'Verification code sent successfully',
-              backgroundColor: colors.secondaryGreen,
             });
           },
           onError: (error) => {
