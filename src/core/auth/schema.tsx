@@ -11,9 +11,10 @@ export const signUpUserSchema = insertUserSchema.extend({
     .string({ required_error: 'Please enter your chosen password' })
     .min(8, { message: 'Your password must be at least 8 characters long' })
     .regex(passwordRegex, {
-      message: 'Please ensure your password meets the requirements',
+      message:
+        'Please ensure your password has a combination of letters, numbers, and special characters',
     }),
-  code: z.string(),
+  code: z.string().max(6, { message: 'Please enter a 6-digit code' }),
 });
 
 export type signUpUserType = z.infer<typeof signUpUserSchema>;

@@ -3,15 +3,12 @@ import { create } from 'zustand';
 import { createSelectors } from '../utils';
 
 interface networkHandler {
-  isWaitingToReconnect: boolean;
-  toggleIsWaitingToReconnect: () => void;
+  isWaitingToReconnect: boolean | null;
   setIsWaitingToReconnect: (isConnected: boolean) => void;
 }
 
 const _useNetworkConnectionHandler = create<networkHandler>()((set) => ({
-  isWaitingToReconnect: false,
-  toggleIsWaitingToReconnect: () =>
-    set((state) => ({ isWaitingToReconnect: !state.isWaitingToReconnect })),
+  isWaitingToReconnect: null,
   setIsWaitingToReconnect: (newBoolean) =>
     set({ isWaitingToReconnect: newBoolean }),
 }));

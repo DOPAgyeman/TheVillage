@@ -10,6 +10,7 @@ type flashMessageProps = {
   message: string;
   description?: string;
   backgroundColor?: string;
+  titleColor?: string;
 };
 
 export const showSuccessMessage = (options: flashMessageProps) => {
@@ -17,15 +18,13 @@ export const showSuccessMessage = (options: flashMessageProps) => {
     message: options.message,
     type: 'success',
     description: options.description,
-    style: [
-      styles.successContainer,
-      { backgroundColor: options.backgroundColor },
-    ],
+    style: styles.successContainer,
     floating: true,
     textStyle: styles.description,
     titleStyle: styles.title,
     icon: { icon: 'success', position: 'left', props: {} },
     position: 'top',
+    duration: 5000,
   });
 };
 
@@ -34,15 +33,13 @@ export const showErrorMessage = (options: flashMessageProps) => {
     message: options.message,
     type: 'danger',
     description: options.description,
-    style: [
-      styles.errorContainer,
-      { backgroundColor: options.backgroundColor },
-    ],
+    style: styles.errorContainer,
     floating: true,
     textStyle: styles.description,
     titleStyle: styles.title,
     icon: { icon: 'danger', position: 'left', props: {} },
     position: 'top',
+    duration: 5000,
   });
 };
 
@@ -51,7 +48,7 @@ export const showInfoMessage = (options: flashMessageProps) => {
     message: options.message,
     type: 'info',
     description: options.description,
-    style: [styles.infoContainer, { backgroundColor: options.backgroundColor }],
+    style: styles.infoContainer,
     floating: true,
     textStyle: styles.description,
     titleStyle: styles.title,
@@ -73,7 +70,7 @@ export const showNetworkConnectionErrorMessage = (
     ],
     floating: true,
     textStyle: styles.description,
-    titleStyle: styles.title,
+    titleStyle: [styles.title, { color: options.titleColor }],
     icon: () => (
       <View className="mr-4 h-8 w-8">
         <Rive
@@ -84,7 +81,7 @@ export const showNetworkConnectionErrorMessage = (
       </View>
     ),
     position: 'bottom',
-    duration: undefined,
+    duration: 10000,
   });
 };
 
@@ -101,10 +98,18 @@ export const showNetworkConnectionSuccessMessage = (
     ],
     floating: true,
     textStyle: styles.description,
-    titleStyle: styles.title,
-    icon: { icon: 'info', position: 'left', props: {} },
+    titleStyle: [styles.title, { color: options.titleColor }],
+    icon: () => (
+      <View className="mr-4 h-8 w-8">
+        <Rive
+          resourceName="wifi_connected_animation"
+          fit={Fit.Contain}
+          autoplay={true}
+        />
+      </View>
+    ),
     position: 'bottom',
-    duration: undefined,
+    duration: 5000,
   });
 };
 

@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { isClerkAPIResponseError } from '@clerk/clerk-expo';
+import { useSignUp } from '@clerk/clerk-expo';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import React, { useCallback } from 'react';
@@ -9,10 +10,10 @@ import { StyleSheet } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
 
+import { useSignUpUser } from '@/api/users/use-signup-user';
+import { useVerifyUser } from '@/api/users/use-verify-user';
 import SignUpScrollList from '@/components/signup/signup-scroll-list';
-import colors from '@/constants/colors';
 import { content } from '@/constants/signup-content';
-import { useSignUpUser, useVerifyUser } from '@/core/auth/email-sign-up';
 import { handleClerkError } from '@/core/auth/errors';
 import type { signUpUserType } from '@/core/auth/schema';
 import { signUpUserSchema } from '@/core/auth/schema';
@@ -31,6 +32,10 @@ export default function SignUp() {
   const decrementIndex = useSignUpScrollIndex.use.decrementIndex();
   const setIndex = useSignUpScrollIndex.use.setIndex();
   const router = useRouter();
+
+  const { mutate: _signUpUser, isPending: isPendingSignUp } = useSignUpUser();
+  const { mutate: _verifyUser, isPending: isPendingVerify } = useVerifyUser();
+  const { isLoaded, signUp, setActive } = useSignUp();
 
   const {
     handleSubmit: handleSignUp,
@@ -56,8 +61,112 @@ export default function SignUp() {
     },
   });
 
-  const signUpUser = useSignUpUser();
-  const verifyUser = useVerifyUser();
+  const signUpUser = useCallback(
+    (data: signUpUserType) => {
+      _signUpUser(
+        { isLoaded: isLoaded, signUp: signUp, data: data },
+        {
+          onSuccess: () => {
+            incrementIndex();
+            if (Keyboard.isVisible()) {
+              Keyboard.dismiss();
+            }
+          },
+          onError: (error) => {
+            if (isClerkAPIResponseError(error)) {
+              handleClerkError({
+                error: error.errors[0],
+                setIndex: setIndex,
+                setError: setError,
+                content: content,
+              });
+            } else {
+              showErrorMessage({
+                message: error.message,
+              });
+            }
+          },
+        }
+      );
+    },
+    [incrementIndex, isLoaded, setError, setIndex, signUp, _signUpUser]
+  );
+
+  const verifyUser = useCallback(
+    (data: signUpUserType) => {
+      _verifyUser(
+        {
+          isLoaded: isLoaded,
+          signUp: signUp,
+          data: data,
+          setActive: setActive,
+        },
+        {
+          onSuccess: () => {
+            if (Keyboard.isVisible()) {
+              Keyboard.dismiss();
+            }
+
+            router.replace('/');
+            setIndex(0);
+          },
+          onError: (error) => {
+            if (isClerkAPIResponseError(error)) {
+              handleClerkError({
+                error: error.errors[0],
+                setError: setError,
+                fieldName: 'code',
+                shouldFocus: false,
+                hideFlashMessage: true,
+              });
+            } else {
+              showErrorMessage({
+                message: error.message,
+              });
+            }
+          },
+        }
+      );
+    },
+    [_verifyUser, isLoaded, setActive, setError, setIndex, signUp, router]
+  );
+
+  const resendVerificationCode = useCallback(
+    (data: signUpUserType) => {
+      _signUpUser(
+        {
+          isLoaded: isLoaded,
+          signUp: signUp,
+          data: data,
+        },
+        {
+          onSuccess: () => {
+            if (Keyboard.isVisible()) {
+              Keyboard.dismiss();
+            }
+            showSuccessMessage({
+              message: 'Verification code sent successfully',
+            });
+          },
+          onError: (error) => {
+            if (isClerkAPIResponseError(error)) {
+              handleClerkError({
+                error: error.errors[0],
+                setIndex: setIndex,
+                setError: setError,
+                content: content,
+              });
+            } else {
+              showErrorMessage({
+                message: error.message,
+              });
+            }
+          },
+        }
+      );
+    },
+    [_signUpUser, isLoaded, setError, setIndex, signUp]
+  );
 
   const onPressButton = useCallback(async () => {
     if (content[scrollIndex].name === 'code') {
@@ -72,55 +181,10 @@ export default function SignUp() {
           { shouldFocus: true }
         );
       } else {
-        try {
-          await handleSignUp(verifyUser)();
-          if (Keyboard.isVisible()) {
-            Keyboard.dismiss();
-          }
-
-          router.replace('/');
-          setIndex(0);
-        } catch (error) {
-          if (isClerkAPIResponseError(error)) {
-            handleClerkError({
-              error: error.errors[0],
-              setError: setError,
-              fieldName: 'code',
-              shouldFocus: false,
-              hideFlashMessage: true,
-              backgroundColor: colors.darkRed,
-            });
-          } else {
-            showErrorMessage({
-              message: 'An error has occurred. Please try again later.',
-              backgroundColor: colors.darkRed,
-            });
-          }
-        }
+        await handleSignUp(verifyUser)();
       }
     } else if (content[scrollIndex].name === 'password') {
-      try {
-        await handleSignUp(signUpUser)();
-        incrementIndex();
-        if (Keyboard.isVisible()) {
-          Keyboard.dismiss();
-        }
-      } catch (error) {
-        if (isClerkAPIResponseError(error)) {
-          handleClerkError({
-            error: error.errors[0],
-            setIndex: setIndex,
-            setError: setError,
-            content: content,
-            backgroundColor: colors.darkRed,
-          });
-        } else {
-          showErrorMessage({
-            message: 'An error has occurred. Please try again later.',
-            backgroundColor: colors.darkRed,
-          });
-        }
-      }
+      await handleSignUp(signUpUser)();
     } else {
       incrementIndex();
       if (Keyboard.isVisible()) {
@@ -128,7 +192,6 @@ export default function SignUp() {
       }
     }
   }, [
-    setIndex,
     getValues,
     handleSignUp,
     incrementIndex,
@@ -136,8 +199,6 @@ export default function SignUp() {
     scrollIndex,
     setError,
     signUpUser,
-
-    router,
   ]);
 
   const onPressBack = useCallback(() => {
@@ -160,33 +221,8 @@ export default function SignUp() {
   }, [setIndex, router]);
 
   const onPressResendCode = useCallback(async () => {
-    try {
-      await handleSignUp(signUpUser)();
-
-      if (Keyboard.isVisible()) {
-        Keyboard.dismiss();
-      }
-      showSuccessMessage({
-        message: 'Verification code sent successfully',
-        backgroundColor: colors.secondaryGreen,
-      });
-    } catch (error) {
-      if (isClerkAPIResponseError(error)) {
-        handleClerkError({
-          error: error.errors[0],
-          setIndex: setIndex,
-          setError: setError,
-          content: content,
-          backgroundColor: colors.darkRed,
-        });
-      } else {
-        showErrorMessage({
-          message: 'An error has occurred. Please try again later.',
-          backgroundColor: colors.darkRed,
-        });
-      }
-    }
-  }, [handleSignUp, signUpUser, setError, setIndex]);
+    await handleSignUp(resendVerificationCode)();
+  }, [handleSignUp, resendVerificationCode]);
 
   return (
     <Animated.View className="h-full py-14">
@@ -222,14 +258,15 @@ export default function SignUp() {
               ? true
               : false
           }
-          loading={isSubmitting}
+          loading={isSubmitting || isPendingSignUp || isPendingVerify}
         />
         {content[scrollIndex].name === 'code' && (
           <Button
             label="Resend verification code"
             variant="ghost"
-            textClassName="text-sm text-darkGray dark:text-darkGray no-underline font-semibold"
+            textClassName="text-sm text-lightBlack dark:text-darkGray no-underline font-semibold"
             onPress={onPressResendCode}
+            className="h-fit w-fit self-center p-4"
           />
         )}
       </View>

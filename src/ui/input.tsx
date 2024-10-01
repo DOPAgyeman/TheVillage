@@ -10,7 +10,7 @@ import type {
 import { useController } from 'react-hook-form';
 import type { TextInput, TextInputProps } from 'react-native';
 import type { InputModeOptions } from 'react-native';
-import { I18nManager, StyleSheet, View } from 'react-native';
+import { I18nManager, Pressable, StyleSheet, View } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
 import Animated, {
   Easing,
@@ -33,14 +33,14 @@ export const inputTv = tv({
     container: 'justify-center',
     label: 'absolute px-4 text-lg text-darkGray dark:text-darkGray',
     input:
-      'w-full rounded-xl border border-darkGray pb-4 pl-4 pr-14 pt-8 text-base text-black placeholder-white focus:border-primary focus:ring-gray dark:border-lightBlack dark:text-white  dark:placeholder-white dark:focus:border-secondaryGreen dark:focus:ring-secondaryGreen',
+      'w-full rounded-xl border border-lightGray pb-4 pl-4 pr-14 pt-8 text-base text-black placeholder-white focus:border-primary focus:ring-gray dark:border-lightBlack dark:text-white  dark:placeholder-white dark:focus:border-secondaryGreen dark:focus:ring-secondaryGreen',
     icon: 'absolute right-0 top-0 h-2/3 w-2/12 items-center justify-center',
   },
 
   variants: {
     focused: {
       true: {
-        input: 'border-gray dark:border-lightBlack',
+        input: 'border-lightGray dark:border-lightBlack',
       },
     },
     error: {
@@ -147,7 +147,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
   const theme = useThemeConfig();
 
   return (
-    <View className="relative gap-4">
+    <View className="relative gap-2 pb-2">
       <View className={styles.container()}>
         {label && (
           <Animated.Text
@@ -184,31 +184,34 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
       <View className={styles.icon()}>
         {inputType === 'password' ? (
           showPassword ? (
-            <Ionicons
-              name="eye-outline"
-              color={colors.darkGray}
-              adjustsFontSizeToFit={true}
-              size={22}
-              onPress={() => setShowPassword(false)}
-            />
+            <Pressable onPress={() => setShowPassword(false)}>
+              <Ionicons
+                name="eye-outline"
+                color={colors.darkGray}
+                adjustsFontSizeToFit={true}
+                size={22}
+              />
+            </Pressable>
           ) : !showPassword ? (
-            <Ionicons
-              name="eye-off-outline"
-              color={colors.darkGray}
-              adjustsFontSizeToFit={true}
-              size={22}
-              onPress={() => setShowPassword(true)}
-            />
+            <Pressable onPress={() => setShowPassword(true)}>
+              <Ionicons
+                name="eye-off-outline"
+                color={colors.darkGray}
+                adjustsFontSizeToFit={true}
+                size={22}
+              />
+            </Pressable>
           ) : null
         ) : error ? (
           !value ? null : inputType === 'date' ? null : (
-            <Ionicons
-              name="close-outline"
-              color={theme.dark ? colors.lightRed : colors.darkRed}
-              adjustsFontSizeToFit={true}
-              size={30}
-              onPress={onPressErase}
-            />
+            <Pressable onPress={onPressErase}>
+              <Ionicons
+                name="close-outline"
+                color={theme.dark ? colors.lightRed : colors.darkRed}
+                adjustsFontSizeToFit={true}
+                size={30}
+              />
+            </Pressable>
           )
         ) : !value ? null : inputType === 'date' ? null : (
           <Ionicons

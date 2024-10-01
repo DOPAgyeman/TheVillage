@@ -34,5 +34,3 @@ export const insertUserSchema = createInsertSchema(users, {
   external_accounts: z.array(z.string()).default([]),
   image_url: z.string().default(''),
 });
-
-export type insertUserType = z.infer<typeof insertUserSchema>;

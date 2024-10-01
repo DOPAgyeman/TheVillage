@@ -218,7 +218,15 @@ export const Button = React.forwardRef<View, Props>(
           }}
         >
           {props.children ? (
-            props.children
+            loading ? (
+              <ActivityIndicator
+                size="small"
+                className={styles.indicator()}
+                testID={testID ? `${testID}-activity-indicator` : undefined}
+              />
+            ) : (
+              props.children
+            )
           ) : (
             <Animated.View style={animateButtonStyle}>
               {loading ? (

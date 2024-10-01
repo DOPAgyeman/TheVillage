@@ -12,6 +12,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		27B72D58730F464B97ADC851 /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7656D70204A44EED99FD4F9A /* Inter.ttf */; };
 		2D52F37C2C9F7096006D81EA /* wifi_connecting_animation.riv in Resources */ = {isa = PBXBuildFile; fileRef = 2D52F37B2C9F7096006D81EA /* wifi_connecting_animation.riv */; };
+		2D5983352CA3267F00A975BB /* wifi_connected_animation.riv in Resources */ = {isa = PBXBuildFile; fileRef = 2D5983342CA3267F00A975BB /* wifi_connected_animation.riv */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		96905EF65AED1B983A6B3ABC /* libPods-TheVillage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-TheVillage.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
@@ -28,6 +29,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TheVillage/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TheVillage/main.m; sourceTree = "<group>"; };
 		2D52F37B2C9F7096006D81EA /* wifi_connecting_animation.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = wifi_connecting_animation.riv; sourceTree = "<group>"; };
+		2D5983342CA3267F00A975BB /* wifi_connected_animation.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = wifi_connected_animation.riv; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-TheVillage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TheVillage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C2E3173556A471DD304B334 /* Pods-TheVillage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheVillage.debug.xcconfig"; path = "Target Support Files/Pods-TheVillage/Pods-TheVillage.debug.xcconfig"; sourceTree = "<group>"; };
 		7656D70204A44EED99FD4F9A /* Inter.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Inter.ttf; path = ../assets/fonts/Inter.ttf; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		2D706E052C9C61AB00783F90 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				2D5983342CA3267F00A975BB /* wifi_connected_animation.riv */,
 				2D52F37B2C9F7096006D81EA /* wifi_connecting_animation.riv */,
 			);
 			path = Assets;
@@ -227,6 +230,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				2D5983352CA3267F00A975BB /* wifi_connected_animation.riv in Resources */,
 				27B72D58730F464B97ADC851 /* Inter.ttf in Resources */,
 				C0F958766761F9CAC9B6AA95 /* PrivacyInfo.xcprivacy in Resources */,
 				2D52F37C2C9F7096006D81EA /* wifi_connecting_animation.riv in Resources */,
@@ -397,7 +401,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kofiagyeman.thevillage.development;
-				PRODUCT_NAME = "TheVillage";
+				PRODUCT_NAME = TheVillage;
 				SWIFT_OBJC_BRIDGING_HEADER = "TheVillage/TheVillage-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -431,7 +435,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kofiagyeman.thevillage.development;
-				PRODUCT_NAME = "TheVillage";
+				PRODUCT_NAME = TheVillage;
 				SWIFT_OBJC_BRIDGING_HEADER = "TheVillage/TheVillage-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -498,7 +502,10 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -556,7 +563,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

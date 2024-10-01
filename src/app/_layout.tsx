@@ -17,11 +17,11 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { APIProvider } from '@/api';
 import { hydrateAuth, loadSelectedTheme } from '@/core';
-import { NetworkInfo } from '@/core/network-info';
+import { useNetworkInfo } from '@/core/use-network-info';
 import { useThemeConfig } from '@/core/use-theme-config';
 import { View } from '@/ui';
 
-import { getItem, setItem } from '../core/storage';
+import { getItem, removeItem, setItem } from '../core/storage';
 
 const tokenCache = {
   async getToken<T>(key: string) {
@@ -29,6 +29,9 @@ const tokenCache = {
   },
   async saveToken<T>(key: string, value: T) {
     return setItem(key, value);
+  },
+  async clearToken(key: string) {
+    return removeItem(key);
   },
 };
 
@@ -68,9 +71,13 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen name="get-started" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="get-started"
+          options={{ headerShown: false, presentation: 'fullScreenModal' }}
+        />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+        <Stack.Screen name="forgot-password" options={{ headerShown: false }} />
       </Stack>
     </Providers>
   );
@@ -78,6 +85,7 @@ function RootLayoutNav() {
 
 function Providers({ children }: { children: React.ReactNode }) {
   const theme = useThemeConfig();
+  useNetworkInfo();
   return (
     <GestureHandlerRootView
       style={styles.container}
@@ -102,7 +110,6 @@ function Providers({ children }: { children: React.ReactNode }) {
             </ClerkProvider>
 
             <FlashMessage />
-            <NetworkInfo />
           </BottomSheetModalProvider>
         </APIProvider>
       </ThemeProvider>

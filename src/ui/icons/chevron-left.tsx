@@ -14,7 +14,7 @@ type ChevronLeftProps = {
 export const ChevronLeft = ({ onPress }: ChevronLeftProps) => {
   const theme = useThemeConfig();
   return (
-    <View>
+    <View className="w-1/4">
       <Button
         variant="ghost"
         className="justify-start bg-none px-0"
